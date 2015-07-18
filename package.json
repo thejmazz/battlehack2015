@@ -21,6 +21,7 @@
   "homepage": "https://github.com/igemuoftATG/fba-api#readme",
   "dependencies": {
     "body-parser": "^1.13.1",
+    "braintree": "^1.27.0",
     "colors": "^1.1.2",
     "express": "^4.12.4",
     "mongoose": "^4.0.5",
