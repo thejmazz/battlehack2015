@@ -7,21 +7,35 @@ var binPath = phantomjs.path;
 var screenDir = 'screens';
 var format = 'png';
 
+
+function zeroFill(i) {
+    return (i < 10 ? '0' : '') + i
+}
+
+
 router.get('/', function(req, res) {
 
     //console.log(binPath);
     //console.log(req.query.url);
-
+    
+    var date = new Date();
+    
     var fileName = req.query.url
                     .replace('http://', '')
                     .replace('https://', '')
                     .replace('/', '-') 
-                    + '-' + (new Date()).getTime()
+                    + '-' + date.getTime();
+
+    var fileMiniPath = screenDir +  '/' + 
+            date.getFullYear() + '/' + 
+            zeroFill(date.getMonth()) + '/' + 
+            zeroFill(date.getDate()) + '/' + 
+            fileName;
 
     var childArgs = [
         path.join(__dirname, '../../../phantom', 'github.js'),
         req.query.url,
-        screenDir + '/' + fileName
+        fileMiniPath 
     ]
 
     cp.execFile(binPath, childArgs, function(err, stdout, stderr) {
@@ -30,7 +44,7 @@ router.get('/', function(req, res) {
         //console.log('stderr: ' + stderr);
 
         //res.send('Successfully rendered ' + fileName + '\n');
-        var filePath = path.join(__dirname, '../../../', screenDir, '/', fileName + '.' + format) 
+        var filePath = path.join(__dirname, '../../../', fileMiniPath + '.' + format) 
         
         res.sendFile(filePath);
     });
