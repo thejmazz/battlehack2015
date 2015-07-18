@@ -2,5 +2,5 @@
 
 ## commands: 
 
-*help* - return this list of available commands
-*lucky* _*query*_ - return the first google search result for _query_
+- **help** - return this list of available commands
+- **lucky _query_** - return the first google search result for _query_
