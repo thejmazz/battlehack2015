@@ -1,5 +1,13 @@
 # Battlehack
 
+## API Usage
+
+To get a screen of a webpage:
+
+```
+GET /api/screen?url=http://google.com
+```
+
 ## commands: 
 
 - **help** - return this list of available commands
