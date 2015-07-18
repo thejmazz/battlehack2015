@@ -14,7 +14,22 @@ router.get('/', function(req, res) {
  switch(req.query.Body.toLowerCase()){
 
    case "commands":
-      text = "you requested help";
+      resp.message("you requested help");
+      res.writeHead(200, {
+          'Content-Type':'text/xml'
+      });
+
+      res.end(resp.toString());
+
+      break;
+  case "pic":
+      resp.message("<Media>https://demo.twilio.com/owl.png</Media>");
+      res.writeHead(200, {
+          'Content-Type':'text/xml'
+      });
+
+      res.end(resp.toString());
+
       break;
    default: test(req.query.Body, function(err, txt){
      text = txt;
