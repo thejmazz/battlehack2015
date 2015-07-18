@@ -26,7 +26,8 @@
     "mongoose": "^4.0.5",
     "morgan": "^1.6.0",
     "phantomjs": "^1.9.17",
-    "screenshot-as-a-service": "^1.1.0"
+    "screenshot-as-a-service": "^1.1.0",
+    "twilio": "^2.2.1"
   },
   "devDependencies": {
     "wiredep": "^2.2.2"
