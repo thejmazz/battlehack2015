@@ -55,16 +55,37 @@ router.get('/', function(req, res) {
 });
 
 
-function test(rss, callback){
-  feed(rss, function(err, articles) {
-    if (err) callback(err)
-    var articleTitles = ""
-    for(var i = 0; i < articles.length; i++){
-      articleTitles +=  i + ": " + articles[i].title + "\n";
-    }
-    callback(null, articleTitles);
-   })
+function test(xml, callback) {
+  var type = feed.identify(xml);
+  if (type === "atom") {
+
+    feed(atom, function(err, articles) {
+      if (err) callback(err)
+      var articleTitles = ""
+      for(var i = 0; i < articles.length; i++){
+        articleTitles +=  i + ": " + articles[i].title + "\n";
+      }
+      callback(null, articleTitles);
+    })
+
+  } else if (type === "rss") {
+
+    feed(rss, function(err, articles) {
+      if (err) callback(err)
+      var articleTitles = ""
+      for(var i = 0; i < articles.length; i++){
+        articleTitles +=  i + ": " + articles[i].title + "\n";
+      }
+      callback(null, articleTitles);
+    })
+
+  } else {
+
+    callback(null, "No feed found!");
+
+  }
  }
+
   // Each article has the following properties:
   //
   //   * "title"     - The article title (String).
