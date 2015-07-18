@@ -23,4 +23,7 @@ App.Lib('router').init(app);
 app.listen(port);
 console.log('Express server listening on port ' + port.toString().blue);
 
+app.use(express.static('public'));
+console.log('Static content being served as well');
+
 //module.exports = App;
