@@ -13,6 +13,7 @@ router.get('/', function(req, res) {
 
  //resp.message('ahoy hoy! Testing Twilio and node.js');
 
+//console.log(t);
  switch(req.query.Body.toLowerCase()){
 
    case "commands":
@@ -25,8 +26,15 @@ router.get('/', function(req, res) {
       res.end(resp.toString());
 
       break;
-  case "pic":
-      resp.message("<Media>https://demo.twilio.com/owl.png</Media>");
+  case "site":
+  client.messages.create({
+  to: req.query.From,
+  from: "+12892160973",
+  mediaUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Toronto_Maple_Leafs_logo.svg/178px-Toronto_Maple_Leafs_logo.svg.png"
+}, function(err, message) {
+    process.stdout.write(message.sid);
+});
+
       res.writeHead(200, {
           'Content-Type':'text/xml'
       });
