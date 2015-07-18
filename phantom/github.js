@@ -1,5 +1,9 @@
+var system = require('system');
+var args = system.args;
+
+
 var page = require('webpage').create();
-page.open('http://github.com/', function() {
-  page.render('github.png');
+page.open(args[1], function() {
+  page.render(args[2] + '.png');
   phantom.exit();
 });
