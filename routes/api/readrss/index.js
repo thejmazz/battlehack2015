@@ -1,3 +1,5 @@
+var router = require('express').Router();
+
 function test(resp, rss){
   var FeedParser = require('feedparser')
   , request = require('request');
