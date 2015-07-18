@@ -11,7 +11,7 @@ var port = App.config().port;
 var app = express();
 
 // ==== Connect to MongoDB ====
-mongoose.connect('mongodb://localhost/fba')
+//mongoose.connect('mongodb://localhost/fba')
 
 // ==== Apply global middleware ====
 App.MW('global-middleware').apply(app);
