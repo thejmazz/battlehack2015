@@ -3,6 +3,7 @@ var express = require('express');
 var colors = require('colors');
 var mongoose = require('mongoose');
 
+<<<<<<< Updated upstream
 var client = require('twilio')('AC44e4193dd5a5565845962f8f0cd23657', 'a5660fce732c184fad44538b12e89083');
 
 /*
@@ -57,6 +58,8 @@ client.messages.list(function(err, data) {
     }
 });*/
 
+=======
+>>>>>>> Stashed changes
 // ==== App ====
 var App = global.App = require('./lib/App');
 var port = App.config().port;
