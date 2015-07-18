@@ -3,61 +3,54 @@ var client = require('twilio')('AC44e4193dd5a5565845962f8f0cd23657', 'a5660fce73
 var twilio = require('twilio')
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
-
+  var text = '';
  // The TwiML response object will have functions on it that correspond
  // to TwiML "verbs" and "nouns". This example uses the "Say" verb.
  // Passing in a string argument sets the content of the XML tag.
  // Passing in an object literal sets attributes on the XML tag.
 
  //resp.message('ahoy hoy! Testing Twilio and node.js');
+ console.log(resp)
  switch(req.query.Body.toLowerCase()){
-   case "commands": resp.message("you requested help");
+
+   case "commands":
+      text = "you requested help";
       break;
-   default: test(resp, req.query.Body);
- }
- //Render the TwiML document using "toString"
- res.writeHead(200, {
-     'Content-Type':'text/xml'
- });
- res.end(resp.toString());
+   default: test(req.query.Body, function(err, txt){
+     text = txt;
+     resp.message("Please wait a moment");
+     resp.message(txt);
+     //Render the TwiML document using "toString"
+     res.writeHead(200, {
+         'Content-Type':'text/xml'
+     });
 
-});
-router.get('/messages', function(req, res){
+     res.end(resp.toString());
 
-})
-function test(resp, rss){
-  var FeedParser = require('feedparser')
-  , request = require('request');
-
-var req = request(rss)
-  , feedparser = new FeedParser([]);
-
-req.on('error', function (error) {
-  // handle any request errors
-  console.log(error);
-});
-req.on('response', function (res) {
-  var stream = this;
-
-  if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
-
-  stream.pipe(feedparser);
-});
-
-
-feedparser.on('error', function(error) {
-  console.log(error);
-});
-feedparser.on('readable', function() {
-  // This is where the action is!
-  var stream = this
-    , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-    , item;
-
-  while (item = stream.read()) {
-    console.log(item);
+  });
   }
 });
 
-}
+var feed = require("feed-read");
+function test(rss, callback){
+  feed(rss, function(err, articles) {
+    if (err) callback(err)
+    var articleTitles = ""
+    for(var i = 0; i < articles.length; i++){
+      articleTitles +=  i + ": " + articles[i].title + "\n";
+    }
+    callback(null, articleTitles);
+   })
+ }
+  // Each article has the following properties:
+  //
+  //   * "title"     - The article title (String).
+  //   * "author"    - The author's name (String).
+  //   * "link"      - The original article link (String).
+  //   * "content"   - The HTML content of the article (String).
+  //   * "published" - The date that the article was published (Date).
+  //   * "feed"      - {name, source, link}
+  //
+
+
 module.exports = router;

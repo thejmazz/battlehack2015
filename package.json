@@ -24,6 +24,7 @@
     "braintree": "^1.27.0",
     "colors": "^1.1.2",
     "express": "^4.12.4",
+    "feed-read": "0.0.1",
     "feedparser": "^1.1.3",
     "mongoose": "^4.0.5",
     "morgan": "^1.6.0",
