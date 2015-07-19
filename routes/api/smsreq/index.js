@@ -185,9 +185,10 @@ function articulate(page, callback) {
             }
           }, function(){
               callback(null, paragraphs)
-          })
+          });
 
     }
+}
 
 
 
