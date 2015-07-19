@@ -31,17 +31,19 @@ router.get('/', function(req, res) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
-      var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
-      console.log(paragraphs);
-      model.paragraphs = paragraphs;
-
-      model.save(function(err, data){
-        if(err)
-          return console.log(err);
-        resp.message(data.paragraphs);
-        close(res, resp);
+      var paragraphs = articulate(model.GeneralList[parseInt(input[0])], function(data){
+        model.paragraphs = data;
+        model.save(function(err, data){
+                if(err)
+                  return console.log(err);
+                resp.message(data.paragraphs);
+                close(res, resp);
+              });
+            });
       });
-    });
+
+
+
 
   } else {
     switch(input[0]){
@@ -161,7 +163,7 @@ function close(res, resp){
 }
 
 
-function articulate(page) {
+function articulate(page, callback) {
 
   request(page, function(error, response, html){
 
@@ -173,20 +175,18 @@ function articulate(page) {
         var $ = cheerio.load(html);
           //var data = $(this);
           var paragraphs = ""
-          $('p').each(function(i, elem){
 
+          $('p').each(function(i, elem){
             for(var j = 0; j < elem.children.length; j++){
               if(elem.children[j].data){
                 paragraphs += (elem.children[j].data);
 
-                console.log(elem.children[j].data)
               }
             }
+          }, function(){
+              callback(null, paragraphs)
+          })
 
-
-
-
-      })
     }
 
 
