@@ -51,9 +51,9 @@ router.get('/', function(req, res) {
                   var p = $('p');
                   for ( var i=0; i<p.length; i++) {
                     for(var j = 0; j < p[i].children.length; j++){
-                      if(p[i].children.[j].data === "\n" || p[i].children.[j].data ==="")
+                      /*if(p[i].children.[j].data === "\n" || p[i].children.[j].data ==="")
                         continue
-                      else if(p[i].children[j].data){
+                      else*/ if(p[i].children[j].data){
                         paragraphs += (p[i].children[j].data);
                     }
                   }
