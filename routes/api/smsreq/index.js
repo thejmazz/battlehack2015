@@ -29,6 +29,7 @@ router.get('/', function(req, res) {
 
   if (!isNaN(parseInt(input[0]))) {
     resp.message("Please wait a moment....");
+    close(res, resp);
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
         if(err)
           return console.log(err);
@@ -177,7 +178,7 @@ function articulate(page, callback) {
             for(var j = 0; j < p[i].children.length; j++){
               console.log(p[i].children[j]);
               if(p[i].children[j].data){
-              paragraph += (p.children[j].data);
+              paragraphs += (p.children[j].data);
             }
           }
         }
