@@ -112,7 +112,6 @@ function parseRSS(xml, schema, callback) {
         if(err)
           return console.log(err);
         else if(data){
-          console.log("HERE\n");
           console.log(data);
           data.GeneralList = list;
 
