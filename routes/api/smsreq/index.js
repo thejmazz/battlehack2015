@@ -31,7 +31,7 @@ router.get('/', function(req, res) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
-        
+
     //  var images = checkimg(model.GeneralList[parseInt(input[0])]);
       /*if (images) {
         client.messages.create({
@@ -197,7 +197,7 @@ function close(res, resp){
 
 function articulate(page) {
 
-  request(url, function(error, response, html){
+  request(page, function(error, response, html){
 
         // First we'll check to make sure no errors occurred when making the request
 
