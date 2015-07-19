@@ -23,6 +23,7 @@ router.get('/', function(req, res) {
       break;
 
     case "site":
+      resp.message("Please wait a moment...");
     request(baseUrl + "api/screen/?url=" + input[1], function (error, response, body) {
         //console.log(body);
         console.log(baseUrl + body);
