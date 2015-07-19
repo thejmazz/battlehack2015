@@ -24,9 +24,9 @@ module.exports = {
         });
 
         // ==== Pre-Flight/Promise Request ====
-        // app.options('*', function(req, res) {
-        //     res.sendStatus(200);
-        // });
+        app.options('*', function(req, res) {
+            res.sendStatus(200);
+        });
 
         // ==== Morgan ====
         app.use(morgan(
