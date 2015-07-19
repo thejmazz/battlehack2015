@@ -65,6 +65,7 @@ router.get('/', function(req, res) {
       break;
 
       case "read":
+      console.log("I am here...\n");
       resp.message("Please wait a moment...");
 
       findrss(input[1], function (err, response, body) {
