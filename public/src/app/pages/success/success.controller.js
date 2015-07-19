@@ -17,6 +17,8 @@ angular.module('smser')
     $scope.success = function() {
       $.get(baseUrl + 'api/purchase/success?paymentId=' + paymentId + '&token=' + token + '&PayerID=' + PayerID).done(function(data){
         console.log(data);
+        alert('thanks! you have made a payment')
+        $location.path('/');
       })
     }
 
