@@ -3,6 +3,7 @@ var client = require('twilio')('AC44e4193dd5a5565845962f8f0cd23657', 'a5660fce73
 var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
+var baseUrl = 'http://45.55.193.224/';
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
@@ -22,19 +23,20 @@ router.get('/', function(req, res) {
       break;
 
     case "site":
-    //request("http://localhost:9001/api/screen/?url=" + input[1], function (error, response, body) {
-
+    request(baseUrl + "api/screen/?url=" + input[1], function (error, response, body) {
+        //console.log(body);
+        console.log(baseUrl + body);
       client.messages.create({
         to: req.query.From,
         from: "+12892160973",
-        mediaUrl: 'http://localhost:9001/api/screen/?url=' + input[1]
+        mediaUrl: baseUrl + body
       }, function(err, message) {
         if(err) return console.log(err);
         process.stdout.write(message.sid);
         close(res, resp);
       });
 
-    //})
+    })
 
       break;
 
