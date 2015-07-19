@@ -23,11 +23,9 @@ router.get('/', function(req, res) {
   var findrss = require("find-rss");
 
   if(parseInt(input[0])){
-    console.log(parseInt(input[0]));
-    console.log("Here at NAN");
     SMS.findOne({SMS: req.query.From}, function(err, model){
       if(err)
-      return console.log(err);
+        return console.log(err);
       resp.message(model.GeneralList[parseInt(input[0])]);
       close(res, resp);
     });
@@ -108,20 +106,21 @@ function parseRSS(xml, schema, callback) {
     }
     console.log("Here and searching\n");
     console.log(schema.SMS);
-  /*  SMS.findOne({SMS: schema.SMS}, function(err, data){
+    SMS.findOne({SMS: schema.SMS}, function(err, model){
       if(err)
         return console.log(data);
-      callback(null, "done");
+      else if(model){
+        model.GeneralList = list;
+      }else{
+        model = schema;
+        model.GeneralList = list;
+      }
+      model.save(function(err, data){
+        if(err)
+          return console.log(data);
+        callback(null, articleTitles);
+      })
     })
-    schema.GeneralList = list;
-    schema.save(function(err, data){
-      if(err)
-        return console.log(data);
-      callback(null, articleTitles);
-
-
-
-    })*/
   })
 }
 
