@@ -179,11 +179,11 @@ function articulate(page) {
               if(elem.children[j].data){
                 paragraphs += (elem.children[j].data);
 
-
+                console.log(elem.children[j].data)
               }
             }
-            })
-          return paragraphs;
+
+
 
 
       })
