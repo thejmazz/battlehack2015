@@ -43,6 +43,7 @@ router.get('/', function(req, res) {
 
       var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
       model.GeneralList = paragraphs;
+      console.log(paragraphs);
       model.Counter = 0;
 
       model.save(function(err, data){
