@@ -31,12 +31,11 @@ router.get('/', function(req, res) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
         if(err)
           return console.log(err);
-        articulate(model.GeneralList[parseInt(input[0])], function(err, data){
-          console.log(data);
-          resp.message(data);
+        articulate(model.GeneralList[parseInt(input[0])], function(err, par){
+          console.log(par);
+          resp.message(par);
           close(res, resp);
-
-        })
+        });
 
       });
 
@@ -159,9 +158,9 @@ function close(res, resp){
 }
 
 
-function articulate(page, callback) {
+function articulate(page) {
 
-  request(page, function(error, response, html){
+  request(page, function(error, response, html, callback){
 
         // First we'll check to make sure no errors occurred when making the request
         if(error)
@@ -175,13 +174,12 @@ function articulate(page, callback) {
           var p = $('p');
           for ( var i=0; i<p.length; i++) {
             for(var j = 0; j < p[i].children.length; j++){
-
+              console.log(p[i].children[j]);
               if(p[i].children[j].data){
-              paragraphs += (p[i].children[j].data);
+              paragraph += (p.children[j].data);
             }
           }
         }
-
         callback(null, paragraphs);
 
     });
