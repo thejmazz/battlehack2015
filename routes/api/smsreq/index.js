@@ -49,7 +49,7 @@ router.get('/', function(req, res) {
       model.save(function(err, data){
         if(err)
           return console.log(err);
-        resp.message(data.GeneralList[0]);
+        resp.message(data.GeneralList[parseInt(input[0])]);
         close(res, resp);
       });
 
