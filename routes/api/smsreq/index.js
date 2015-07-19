@@ -196,6 +196,7 @@ function close(res, resp){
 
 
 function articulate(page) {
+  console.log("Page:" + page);
   read(page, function(err, article, meta) {
     if (err) return console.log(err);
 
@@ -209,13 +210,14 @@ function articulate(page) {
 
     paragraphs.join(', ');
     paragraphs = paragraphs.filter(function(n){ return n != "" });
-
+    console.log("paragraphs:" + paragraphs);
     article.close();
     return paragraphs;
   });
 }
 
 function checkimg(page) {
+
   read(page, function (err, article, meta) {
     $ = cheerio.load(article.content);
 
