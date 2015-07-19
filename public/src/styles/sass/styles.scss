@@ -2,6 +2,9 @@
 @import 'lumxcolors';
 @import 'scrollbar';
 
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+$lobster: 'Lobster', cursive;
+
 // Colours
 $header-bg: $teal-500;
 $nav-col: $grey-400;
@@ -238,8 +241,53 @@ body {
 h1#title {
   padding-top: 20px;
   display: inline-block;
-  border-bottom: 2px solid black;
-  transform: rotate(-20deg);
+  font-family: $lobster;
+  font-size: 4em;
+  //border-bottom: 2px solid black;
+  //transform: rotate(-20deg);
+}
+
+#main-icons {
+  div {
+    text-align: center;
+    //border-radius: 50%;
+    //border: 2px solid black;
+
+
+    i {
+      display: block;
+      font-size: 3em;
+    }
+  }
+}
+
+#submit-feed {
+  input {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+  }
+  i {
+    margin-top: 10px;
+    font-size: 50px;
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    border-radius: 50%;
+    color: black;
+    border: 2px solid black;
+    @include transition(all 500ms ease);
+
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+  }
+}
+
+#continue {
+  display: block;
+  text-decoration: none;
 }
 
 #header {
