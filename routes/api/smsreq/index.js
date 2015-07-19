@@ -208,11 +208,14 @@ function articulate(page) {
           //var data = $(this);
           var paragraphs = []
           $('p').each(function(i, elem){
-              console.log(elem.children)
-              if(elem.children.name === "p" || elem.children.type === "text"){
-                paragraphs.push(elem.children);
+            console.log(elem);
+            for(var j = 0; j < elem.children.length; j++){
+              if(elem.children[j].data){
+                paragraphs.push(elem.children[j].data);
+              //console.log(elem.children[j].data)
 
               }
+            }
             })
 
           //console.log(paragraphs);
