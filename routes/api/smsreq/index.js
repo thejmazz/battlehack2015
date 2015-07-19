@@ -5,7 +5,7 @@ var feed = require("feed-read");
 var request = require("request");
 var baseUrl = 'http://45.55.193.224/';
 var SMSdb = App.Model("sms");
-var phone_num = "+16475600682" //"+12892160973",
+var phone_num = "+12892160973"; //"+16475600682"
 
 
 router.get('/', function(req, res) {
