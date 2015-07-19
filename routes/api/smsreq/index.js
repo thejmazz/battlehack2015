@@ -28,7 +28,14 @@ router.get('/', function(req, res) {
       if(err)
         return console.log(err);
       resp.message(model.GeneralList[parseInt(input[0])]);
+
+    /*
+      read(model.GeneralList[parseInt(input[0])], function {
+
+      })
+
       close(res, resp);
+      */
     });
 
   }else {
@@ -84,6 +91,7 @@ router.get('/', function(req, res) {
             rsslist.push(i + ": " + response[i].title + "\n");
           }
           resp.message(rsslist.join());
+          close(res, resp);
         }
       });
       break;
