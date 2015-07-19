@@ -25,7 +25,7 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
-  if(parseInt(input[0])!== NaN){
+  if((parseInt(input[0]) === NaN)){
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
