@@ -212,13 +212,13 @@ function articulate(page) {
              for(var y = 0; y < elem.children.length; y++){
               if(elem.children[y].name !== "p" || elem.children[y].type !== "text")
                   continue;
-              paragraphs.push(elem.children[y]["data"]);
-              console.log(elem.children[y]["data"])
+              paragraphs.push(elem.children[y]);
+              console.log(elem.children[y])
             }
 
 
           })
-          console.log(paragraphs);
+          //console.log(paragraphs);
           return paragraphs;
 
 
