@@ -215,9 +215,9 @@ function articulate(page) {
               //var data = $(this);
               var paragraphs = []
               $('p').each(function(i, elem){
-                for(var j = 0; j < elem.children.length; i++ ){
+
                 //  for(var y = 0; y < elem.children[j].length; y++)
-                    paragraphs.push(elem.children[j].data);
+                    paragraphs.push(elem.children);
                 }
               })
               console.log(paragraphs);
