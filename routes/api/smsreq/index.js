@@ -11,22 +11,24 @@ router.get('/', function(req, res) {
   // Passing in an object literal sets attributes on the XML tag.
 
  switch(req.query.Body.toLowerCase()){
-   case "commands":
+    case "commands":
       resp.message("you requested help");
       close(res, resp);
       break;
-  case "pic":
-  client.messages.create({
-  to: req.query.From,
-  from: "+12892160973",
-  mediaUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Toronto_Maple_Leafs_logo.svg/178px-Toronto_Maple_Leafs_logo.svg.png"
-}, function(err, message) {
-    console.log(err);
-    process.stdout.write(message.sid);
-    close(res, resp);
-});
-  break;
-  default:
+
+    case "pic":
+      client.messages.create({
+      to: req.query.From,
+      from: "+12892160973",
+      mediaUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Toronto_Maple_Leafs_logo.svg/178px-Toronto_Maple_Leafs_logo.svg.png"
+      }, function(err, message) {
+        console.log(err);
+        process.stdout.write(message.sid);
+        close(res, resp);
+      });
+      break;
+
+    default:
       resp.message("Please wait a moment");
       parseRSS(req.query.Body, function(err, txt){
       text = txt;
@@ -40,7 +42,7 @@ router.get('/', function(req, res) {
 
 
 function parseRSS(xml, callback) {
-  var type = feed.identify(xml);
+  // var type = feed.identify(xml);
   feed(xml, function(err, articles) {
       if (err)
           callback(null, "no feed found!");
