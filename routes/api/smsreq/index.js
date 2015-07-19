@@ -10,81 +10,47 @@ router.get('/', function(req, res) {
   // Passing in a string argument sets the content of the XML tag.
   // Passing in an object literal sets attributes on the XML tag.
 
-
- //resp.message('ahoy hoy! Testing Twilio and node.js');
-
-//console.log(t);
  switch(req.query.Body.toLowerCase()){
-
    case "commands":
       resp.message("you requested help");
-
-      res.writeHead(200, {
-          'Content-Type':'text/xml'
-      });
-
-      res.end(resp.toString());
-
+      close(res, resp);
       break;
-  case "site":
+  case "pic":
   client.messages.create({
   to: req.query.From,
   from: "+12892160973",
   mediaUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Toronto_Maple_Leafs_logo.svg/178px-Toronto_Maple_Leafs_logo.svg.png"
 }, function(err, message) {
+    console.log(err);
     process.stdout.write(message.sid);
+    close(res, resp);
 });
-
-      res.writeHead(200, {
-          'Content-Type':'text/xml'
-      });
-
-      res.end(resp.toString());
-      break;
-  default: test(req.query.Body, function(err, txt){
-      text = txt;
+  break;
+  default:
       resp.message("Please wait a moment");
+      parseRSS(req.query.Body, function(err, txt){
+      text = txt;
+
       resp.message(txt);
       //Render the TwiML document using "toString"
-      res.writeHead(200, {
-        'Content-Type':'text/xml'
-      });
-      res.end(resp.toString());
+      close(res, resp);
     });
   }
 });
 
 
-function test(xml, callback) {
+function parseRSS(xml, callback) {
   var type = feed.identify(xml);
-  if (type === "atom") {
-
-    feed(atom, function(err, articles) {
-      if (err) callback(err)
+  feed(xml, function(err, articles) {
+      if (err)
+          callback(null, "no feed found!");
       var articleTitles = ""
       for(var i = 0; i < articles.length; i++){
         articleTitles +=  i + ": " + articles[i].title + "\n";
       }
       callback(null, articleTitles);
     })
-
-  } else if (type === "rss") {
-
-    feed(rss, function(err, articles) {
-      if (err) callback(err)
-      var articleTitles = ""
-      for(var i = 0; i < articles.length; i++){
-        articleTitles +=  i + ": " + articles[i].title + "\n";
-      }
-      callback(null, articleTitles);
-    })
-
-  } else {
-
-    callback(null, "No feed found!");
-
   }
- }
 
   // Each article has the following properties:
   //
@@ -96,5 +62,14 @@ function test(xml, callback) {
   //   * "feed"      - {name, source, link}
   //
 
+//utilities
 
+function close(res, resp){
+  res.writeHead(200, {
+      'Content-Type':'text/xml'
+  });
+
+  res.end(resp.toString());
+
+}
 module.exports = router;
