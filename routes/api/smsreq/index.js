@@ -107,7 +107,7 @@ function parseRSS(xml, schema, callback) {
     }
     console.log("Here and searching\n");
     console.log(schema.SMS);
-    SMS.findOne({SMS: schema.SMS}, function(err, data){
+  /*  SMS.findOne({SMS: schema.SMS}, function(err, data){
       if(err)
         return console.log(data);
       callback(null, "done");
@@ -117,8 +117,10 @@ function parseRSS(xml, schema, callback) {
       if(err)
         return console.log(data);
       callback(null, articleTitles);
-    })
 
+
+
+    })*/
   })
 }
 
