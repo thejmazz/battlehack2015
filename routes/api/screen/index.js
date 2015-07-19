@@ -17,25 +17,25 @@ router.get('/', function(req, res) {
 
     //console.log(binPath);
     //console.log(req.query.url);
-    
+
     var date = new Date();
-    
+
     var fileName = req.query.url
                     .replace('http://', '')
                     .replace('https://', '')
-                    .replace('/', '-') 
+                    .replace('/', '-')
                     + '-' + date.getTime();
 
-    var fileMiniPath = screenDir +  '/' + 
-            date.getFullYear() + '/' + 
-            zeroFill(date.getMonth()) + '/' + 
-            zeroFill(date.getDate()) + '/' + 
+    var fileMiniPath = screenDir +  '/' +
+            date.getFullYear() + '/' +
+            zeroFill(date.getMonth()) + '/' +
+            zeroFill(date.getDate()) + '/' +
             fileName;
 
     var childArgs = [
         path.join(__dirname, '../../../phantom', 'github.js'),
         req.query.url,
-        fileMiniPath 
+        fileMiniPath
     ]
 
     cp.execFile(binPath, childArgs, function(err, stdout, stderr) {
@@ -44,9 +44,10 @@ router.get('/', function(req, res) {
         //console.log('stderr: ' + stderr);
 
         //res.send('Successfully rendered ' + fileName + '\n');
-        var filePath = path.join(__dirname, '../../../', fileMiniPath + '.' + format) 
-        
-        res.sendFile(filePath);
+        var filePath = path.join(__dirname, '../../../', fileMiniPath + '.' + format)
+
+        res.send(filePath)
+        //res.sendFile(filePath);
     });
 });
 
