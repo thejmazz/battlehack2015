@@ -4,7 +4,7 @@ var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
 var baseUrl = 'http://45.55.193.224/';
-var SMSdb = App.Model("sms");
+var SMSModel = App.Model("sms");
 var phone_num = "+16475600682" //"+12892160973",
 
 
@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
 
-  var smsModel = new SMSdb({SMS: req.query.From});
+  var smsModel = new SMSModel({SMS: req.query.From});
 
   // The TwiML response object will have functions on it that correspond
   // to TwiML "verbs" and "nouns". This example uses the "Say" verb.
@@ -22,20 +22,11 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
-  if(parseInt(input[0])){
-    console.log("hereherehere\n")
-    SMSdb.findOne({SMS: req.query.From}, function(err, model){
+  if(parseInt(input[0]) || parseInt(input) === 0){
+    SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
       resp.message(model.GeneralList[parseInt(input[0])]);
-
-    /*
-      read(model.GeneralList[parseInt(input[0])], function {
-
-      })
-
-      close(res, resp);
-      */
     });
 
   }else {
@@ -79,6 +70,7 @@ router.get('/', function(req, res) {
         if (err) return console.log(err);
 
         if (response.length === 1) {
+          console.log("here");
           parseRSS(response[0].url, smsModel, function(err, txt) {
             resp.message(txt);
             close(res, resp);
@@ -114,7 +106,7 @@ function parseRSS(xml, schema, callback) {
       list.push(articles[i].link);
     }
 
-    SMSdb.findOne({SMS: schema.SMS}, function(err, model){
+    SMSModel.findOne({SMS: schema.SMS}, function(err, model){
       if(err)
         return console.log(data);
       else if(model){
