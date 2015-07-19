@@ -37,8 +37,8 @@ router.get('/', function(req, res) {
         client.messages.create({
           to: req.query.From,
           from: phone_num,
-          mediaUrl: images[0].src;
-        }
+          mediaUrl: images[0].src
+        })
       }
 
       var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
@@ -65,7 +65,7 @@ router.get('/', function(req, res) {
 
       close(res, resp);
 
-  } else {
+    })} else {
     switch(input[0]){
 
       case "commands":
