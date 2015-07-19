@@ -56,7 +56,6 @@ router.get('/', function(req, res) {
       break;
 
     case "rss":
-      console.log(resp);
       resp.message("Please wait a moment...");
       parseRSS(input[1], smsModel, function(err, txt){
         if(err)
@@ -112,7 +111,7 @@ function parseRSS(xml, schema, callback) {
         if(err)
           return console.log(err);
         else if(data){
-          console.log(data);
+          console.log("data: " + data);
           data.GeneralList = list;
 
           data.save(function(err){
