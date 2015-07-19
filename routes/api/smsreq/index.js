@@ -198,6 +198,8 @@ function close(res, resp){
 function articulate(page) {
   console.log("Page:" + page);
   read(page, function(err, article, meta) {
+    if(err)
+      return console.error(err);
     console.log(article);
     /*if (err) return console.log(err);
 
