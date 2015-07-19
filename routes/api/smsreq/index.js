@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
   // Passing in a string argument sets the content of the XML tag.
   // Passing in an object literal sets attributes on the XML tag.
 
-  var input = req.query.Body.toLowerCase();
+  var input = req.query.Body.toLowerCase().split(" ");
   console.log(input);
 
   switch(input[0]){
@@ -32,7 +32,7 @@ router.get('/', function(req, res) {
       break;
 
     case "rss":
-      resp.message("Please wait a moment");
+      resp.message("Please wait a moment...");
       parseRSS(input[1], function(err, txt){
         text = txt;
 
@@ -43,7 +43,7 @@ router.get('/', function(req, res) {
 
     default:
       //type
-      
+
   }
 });
 
