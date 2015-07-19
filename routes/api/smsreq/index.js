@@ -22,41 +22,49 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
+  if(parseInt(input[0])){
+    SMS.findOne({SMS: req.query.From}, function(err, model){
+      if(err)
+        return console.log(err);
+      resp.message(model.GeneralList[parseInt(input[0])]);
+      close(res, resp);
+    });
 
-  switch(input[0]){
-    case "commands":
+  }else {
+    switch(input[0]){
+
+      case "commands":
       resp.message("you requested help");
       close(res, resp);
       break;
 
-    case "site":
+      case "site":
       resp.message("Please wait a moment...");
       request(baseUrl + "api/screen/?url=" + input[1], function (error, response, body) {
-      client.messages.create({
-        to: req.query.From,
-        from: "+12892160973",
-        mediaUrl: baseUrl + body
-      }, function(err, message) {
-        if(err) return console.log(err);
-        process.stdout.write(message.sid);
-        close(res, resp);
+        client.messages.create({
+          to: req.query.From,
+          from: "+12892160973",
+          mediaUrl: baseUrl + body
+        }, function(err, message) {
+          if(err) return console.log(err);
+          process.stdout.write(message.sid);
+          close(res, resp);
+        });
       });
-    });
 
       break;
 
-    case "rss":
-      console.log(resp);
+      case "rss":
       resp.message("Please wait a moment...");
       parseRSS(input[1], smsModel, function(err, txt){
         if(err)
-          return console.log(err);
+        return console.log(err);
         resp.message(txt);
         close(res, resp);
       });
       break;
 
-    case "read":
+      case "read":
       resp.message("Please wait a moment...");
 
       findrss(input[1], function (err, response, body) {
@@ -78,48 +86,59 @@ router.get('/', function(req, res) {
         }
       });
       break;
-    default:
-      resp.message("invalid command");
-      close(res, resp);
+      default:
+        resp.message("invalid command");
+        close(res, resp);
 
+    }
   }
 });
 
 function parseRSS(xml, schema, callback) {
-  // var type = feed.identify(xml);
   feed(xml, function(err, articles) {
-      if (err)
-        return callback(null, "no feed found!");
-      var articleTitles = ""
-
-      for(var i = 0; i < articles.length; i++){
-        articleTitles +=  i + ": " + articles[i].title + "\n";
-        schema.GeneralList.push(articles[i].link);
+    if (err)
+      return callback(null, "no feed found!");
+    var articleTitles = ""
+    var list = []
+    for(var i = 0; i < articles.length; i++){
+      articleTitles +=  i + ": " + articles[i].title + "\n";
+      list.push(articles[i].link);
+    }
+    console.log("Here and searching\n");
+    console.log(schema.SMS);
+    SMS.findOne({SMS: schema.SMS}, function(err, model){
+      if(err)
+        return console.log(data);
+      else if(model){
+        model.GeneralList = list;
+      }else{
+        model = schema;
+        model.GeneralList = list;
       }
-      schema.save(function(err){
+      model.save(function(err, data){
         if(err)
-          return console.log(err)
+          return console.log(data);
         callback(null, articleTitles);
       })
-    //  callback(null, articleTitles);
     })
-  }
+  })
+}
 
-  // Each article has the following properties:
-  //
-  //   * "title"     - The article title (String).
-  //   * "author"    - The author's name (String).
-  //   * "link"      - The original article link (String).
-  //   * "content"   - The HTML content of the article (String).
-  //   * "published" - The date that the article was published (Date).
-  //   * "feed"      - {name, source, link}
-  //
+// Each article has the following properties:
+//
+//   * "title"     - The article title (String).
+//   * "author"    - The author's name (String).
+//   * "link"      - The original article link (String).
+//   * "content"   - The HTML content of the article (String).
+//   * "published" - The date that the article was published (Date).
+//   * "feed"      - {name, source, link}
+//
 
 //utilities
 
 function close(res, resp){
   res.writeHead(200, {
-      'Content-Type':'text/xml'
+    'Content-Type':'text/xml'
   });
 
   res.end(resp.toString());
