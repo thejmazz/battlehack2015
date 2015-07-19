@@ -107,14 +107,14 @@ function parseRSS(xml, schema, callback) {
       SMS.find({SMS: schema.SMS}, function(err, data){
         if(err)
           return console.log(err);
-        else if(data)
+        else if(data){
           data.GeneralList = schema.GeneralList
           data.save(function(err){
             if(err)
               return console.log(err);
             callback(null, articleTitles);
           })
-        else {
+      }  else {
           schema.save(function(err){
             if(err)
               return console.log(err)
