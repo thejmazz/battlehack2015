@@ -203,7 +203,7 @@ function articulate(page) {
 
         if(!error){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-
+            console.log(html);
             var $ = cheerio.load(html);
 
             // Finally, we'll define the variables we're going to capture
@@ -213,10 +213,13 @@ function articulate(page) {
             $('.header').filter(function(){
 
          // Let's store the data we filter into a variable so we can easily see what's going on.
-              var data = $(this);
-              console.log("__________\n");
-              console.log(data);
-              return data;
+              //var data = $(this);
+              var paragraphs = []
+              $('p').each(function(i, elem){
+                paragraphs[i] = $(this).text;
+              })
+              console.log(paragraphs);
+              return paragraphs;
           })
         }
     })
