@@ -29,7 +29,7 @@ router.get('/', function(req, res) {
 
   if (!isNaN(parseInt(input[0]))) {
     resp.message("Please wait a moment....");
-    close(res, resp);
+    //close(res, resp);
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
         if(err)
           return console.log(err);
