@@ -197,7 +197,7 @@ function close(res, resp){
 
 function articulate(page) {
 
-  request(url, function(error, response, html){
+  request(page, function(error, response, html){
 
         // First we'll check to make sure no errors occurred when making the request
 
@@ -220,30 +220,8 @@ function articulate(page) {
           })
         }
     })
-})
-
 }
 
-function checkimg(page) {
-
-  read(page, function (err, article, meta) {
-    $ = cheerio.load(article.content);
-
-    var images = [];
-    $('img').each(function(i, elem) {
-      images[i] = $(this).text();
-
-    });
-
-    paragraphs.join(', ');
-    paragraphs = paragraphs.filter(function(n){ return n != "" });
-
-    article.close();
-
-    return images;
-
-  })
-}
 
 
 module.exports = router;
