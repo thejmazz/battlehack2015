@@ -96,12 +96,12 @@ function parseRSS(xml, schema, callback) {
         articleTitles +=  i + ": " + articles[i].title + "\n";
         schema.GeneralList.push(articles[i].link);
       }
-      schema.save(function(err){
+      /*schema.save(function(err){
         if(err)
           return console.log(err)
         callback(null, articleTitles);
-      })
-
+      })*/
+      callback(null, articleTitles);
     })
   }
 
