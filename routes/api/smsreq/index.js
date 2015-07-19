@@ -11,6 +11,7 @@ router.get('/', function(req, res) {
   // Passing in an object literal sets attributes on the XML tag.
 
   var input = req.query.Body.toLowerCase().split(" ");
+  var findrss = require("find-rss");
   console.log(input);
 
   switch(input[0]){
@@ -34,11 +35,33 @@ router.get('/', function(req, res) {
     case "rss":
       resp.message("Please wait a moment...");
       parseRSS(input[1], function(err, txt){
-        text = txt;
-
         resp.message(txt);
         //Render the TwiML document using "toString"
         close(res, resp);
+      });
+
+    case "read":
+      resp.message("Please wait a moment...");
+
+      findrss(input[1], function (err, response, body) {
+        if (err) return console.log(err);
+
+        if (response.length === 1) {
+          parseRSS(response[0].url, function(err, txt) {
+            resp.message(txt);
+            close(res, resp);
+          })
+
+        } else {
+
+          var rsslist = []
+          for (var i = 0; i < response.length; i++) {
+            rsslist.push(i + ": " + response[i].title + "\n");
+          }
+          resp.message(rsslist.join());
+        }
+
+        console.log(response);
       });
 
     default:
