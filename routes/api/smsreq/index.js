@@ -216,7 +216,7 @@ function articulate(page) {
               var data = $(this);
               var paragraphs = []
               $('p').each(function(i, elem){
-                paragraphs[i] = elem;
+                paragraphs[i] = $('p').next.body;
               })
               console.log(paragraphs);
               return paragraphs;
