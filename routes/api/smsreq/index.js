@@ -3,6 +3,8 @@ var client = require('twilio')('AC44e4193dd5a5565845962f8f0cd23657', 'a5660fce73
 var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
+var read = require('node-readability');
+var cheerio = require('cheerio');
 var baseUrl = 'http://45.55.193.224/';
 
 var SMSModel = App.Model("sms");
@@ -25,15 +27,45 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
-  if(!isNaN(parseInt(input[0]))){
+  if (!isNaN(parseInt(input[0]))) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
-      resp.message(model.GeneralList[parseInt(input[0])]);
+
+      var images = checkimg(model.GeneralList[parseInt(input[0])]);
+      if (images) {
+        client.messages.create({
+          to: req.query.From,
+          from: phone_num,
+          mediaUrl: images[0].src;
+        }
+      }
+
+      var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
+      model.GeneralList = paragraphs;
+      model.Counter = 0;
+
+      resp.message(model.GeneralList[0]);
+
       close(res, resp);
     });
 
-  }else {
+  } else if (input[0] === 'next') {
+    SMSModel.findOne({SMS: req.query.From}, function(err, model){
+      if(err)
+        return console.log(err);
+
+      if (model.GeneralList.length == model.Counter) {
+        resp.message(model.GeneralList[model.Counter]);
+        resp.message("~end of article~");
+      } else {
+        model.Counter += 1;
+        resp.message(model.GeneralList[model.Counter]);
+      }
+
+      close(res, resp);
+
+  } else {
     switch(input[0]){
 
       case "commands":
@@ -54,7 +86,6 @@ router.get('/', function(req, res) {
           close(res, resp);
         });
       });
-
       break;
 
       case "rss":
@@ -92,6 +123,7 @@ router.get('/', function(req, res) {
         }
       });
       break;
+
       default:
         resp.message("invalid command");
         close(res, resp);
@@ -149,4 +181,46 @@ function close(res, resp){
   res.end(resp.toString());
 
 }
+
+
+function articulate(page) {
+  read(page, function(err, article, meta) {
+    if (err) return console.log(err);
+
+    // var cheerio = require('cheerio');
+    $ = cheerio.load(article.content);
+
+    var paragraphs = [];
+    $('p').each(function(i, elem) {
+      paragraphs[i] = $(this).text();
+    });
+
+    paragraphs.join(', ');
+    paragraphs = paragraphs.filter(function(n){ return n != "" });
+
+    article.close();
+    return paragraphs;
+  });
+}
+
+function checkimg(page) {
+  read(page, function (err, article, meta) {
+    $ = cheerio.load(article.content);
+
+    var images = [];
+    $('img').each(function(i, elem) {
+      images[i] = $(this).text();
+    });
+
+    paragraphs.join(', ');
+    paragraphs = paragraphs.filter(function(n){ return n != "" });
+
+    article.close();
+
+    return images;
+
+  })
+}
+
+
 module.exports = router;

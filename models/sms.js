@@ -8,6 +8,9 @@ var SMSSchema = new mongoose.Schema({
     },
     GeneralList: {
       type: [String]
+    },
+    Counter: {
+    	type : int
     }
 
 

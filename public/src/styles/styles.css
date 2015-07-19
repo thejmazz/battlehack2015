@@ -10,27 +10,181 @@
  * A partial implementation of the Ruby display functions from Compass:
  * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
  */
+* {
+  box-sizing: border-box; }
+
 html, body {
   height: 100%; }
 
 .inherit-y {
   height: 100%; }
 
+.clear {
+  clear: both; }
+
 body {
   background-color: #EEEEEE; }
+
+.center {
+  text-align: center; }
+
+.wrap .row {
+  margin: 0; }
 
 #splash {
   height: 100%;
   width: 100%; }
 
 #t1 {
-  background-color: #64B5F6; }
+  background-color: #64B5F6;
+  height: 100%; }
 
 #t2 {
-  background-color: #009688; }
+  background-color: #0b6ab6; }
 
 #t3 {
   background-color: #CE93D8; }
+
+#phone-wrap {
+  padding: 5%;
+  height: 100%; }
+
+#phone {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border: 5px solid #212121;
+  border-top: 50px solid #212121;
+  border-bottom: 35px solid #212121;
+  background-color: #E0E0E0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px; }
+  #phone #messages-wrapper {
+    height: calc(100% - 30px);
+    overflow-y: scroll; }
+  #phone #messages {
+    padding-top: 10px;
+    list-style: none; }
+    #phone #messages .msg {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 10px;
+      position: relative; }
+      #phone #messages .msg .triangle {
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        background-color: black;
+        text-indent: -9999px; }
+      #phone #messages .msg p {
+        width: 0;
+        height: 0;
+        position: absolute;
+        text-indent: -9999px; }
+    #phone #messages .from {
+      float: left;
+      -webkit-border-radius: 0 5px 5px 5px;
+      -moz-border-radius: 0 5px 5px 5px;
+      -ms-border-radius: 0 5px 5px 5px;
+      -o-border-radius: 0 5px 5px 5px;
+      border-radius: 0 5px 5px 5px;
+      margin-left: 10px;
+      background-color: #64B5F6; }
+      #phone #messages .from p {
+        border-top: 10px solid #64B5F6;
+        border-left: 10px solid transparent;
+        top: 0px;
+        left: -10px; }
+    #phone #messages .to {
+      float: right;
+      margin-right: 10px;
+      -webkit-border-radius: 5px 0px 5px 5px;
+      -moz-border-radius: 5px 0px 5px 5px;
+      -ms-border-radius: 5px 0px 5px 5px;
+      -o-border-radius: 5px 0px 5px 5px;
+      border-radius: 5px 0px 5px 5px;
+      text-align: right;
+      background-color: #A5D6A7; }
+      #phone #messages .to p {
+        border-top: 10px solid #A5D6A7;
+        border-right: 10px solid transparent;
+        top: 0px;
+        right: -10px; }
+  #phone #typespace {
+    position: absolute;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
+    background-color: #5C6BC0; }
+    #phone #typespace input, #phone #typespace div {
+      height: 100%;
+      float: left; }
+    #phone #typespace input {
+      width: 90%; }
+    #phone #typespace #submit {
+      width: 10%;
+      text-align: center;
+      line-height: 30px;
+      -webkit-transition: all false false, 500ms false false, ease false false;
+      -moz-transition: all false false false, 500ms false false false, ease false false false;
+      -o-transition: all false false false, 500ms false false false, ease false false false;
+      transition: all 500ms ease; }
+      #phone #typespace #submit:hover {
+        cursor: pointer;
+        background-color: #333f83; }
+  #phone #camera {
+    position: absolute;
+    top: -40px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #BDBDBD; }
+  #phone #speaker {
+    position: absolute;
+    left: 25%;
+    top: -30px;
+    width: 50%;
+    height: 15px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #BDBDBD; }
+  #phone .phone-button {
+    color: #BDBDBD;
+    position: absolute;
+    bottom: -40px;
+    font-size: 30px; }
+    #phone .phone-button i {
+      -webkit-transition: all false false, 500ms false false, ease false false;
+      -moz-transition: all false false false, 500ms false false false, ease false false false;
+      -o-transition: all false false false, 500ms false false false, ease false false false;
+      transition: all 500ms ease; }
+    #phone .phone-button i:hover {
+      color: #EEEEEE; }
+  #phone #button-menu {
+    left: 15px; }
+  #phone #button-home {
+    left: 50%;
+    transform: translateX(-50%); }
+  #phone #button-back {
+    right: 15px; }
+
+h1#title {
+  padding-top: 20px;
+  display: inline-block;
+  border-bottom: 2px solid black;
+  transform: rotate(-20deg); }
 
 #header {
   height: 60px;
