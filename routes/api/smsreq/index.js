@@ -23,6 +23,7 @@ router.get('/', function(req, res) {
   var findrss = require("find-rss");
 
   if(parseInt(input[0])){
+    console.log("Why I am here...\n");
     SMSdb.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
@@ -65,7 +66,6 @@ router.get('/', function(req, res) {
       break;
 
       case "read":
-      console.log("I am here...\n");
       resp.message("Please wait a moment...");
 
       findrss(input[1], function (err, response, body) {
