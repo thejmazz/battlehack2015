@@ -13,11 +13,7 @@ function zeroFill(i) {
 }
 
 
-router.get('/', function(req, res) {
-
-    //console.log(binPath);
-    //console.log(req.query.url);
-    
+router.get('/', function(req, res) {    
     var date = new Date();
 
     var fileName = req.query.url
