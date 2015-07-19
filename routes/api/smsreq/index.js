@@ -40,18 +40,17 @@ router.get('/', function(req, res) {
         process.stdout.write(message.sid);
         close(res, resp);
       });
-
-    })
+    });
 
       break;
 
     case "rss":
-      console.log("I am here");
-      console.log(input[1]);
+      console.log(resp);
       resp.message("Please wait a moment...");
       parseRSS(input[1], smsModel, function(err, txt){
         if(err)
           return console.log(err);
+        console.log("text: " + txt);
         resp.message(txt);
         close(res, resp);
       });
@@ -77,8 +76,6 @@ router.get('/', function(req, res) {
           }
           resp.message(rsslist.join());
         }
-
-        console.log(response);
       });
       break;
     default:
