@@ -105,7 +105,7 @@ function parseRSS(xml, schema, callback) {
         list.push(articles[i].link);
       }
 
-      SMS.find({SMS: schema.SMS}, function(err, data){
+      SMS.findOne({SMS: schema.SMS}, function(err, data){
         if(err)
           return console.log(err);
         else if(data){
