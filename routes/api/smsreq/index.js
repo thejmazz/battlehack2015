@@ -32,22 +32,30 @@ router.get('/', function(req, res) {
       if(err)
         return console.log(err);
 
-      var images = checkimg(model.GeneralList[parseInt(input[0])]);
-      if (images) {
+    //  var images = checkimg(model.GeneralList[parseInt(input[0])]);
+      /*if (images) {
         client.messages.create({
           to: req.query.From,
           from: phone_num,
           mediaUrl: images[0].src
         })
-      }
+      }*/
 
       var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
-      model.GeneralList = paragraphs;
+      model.paragraphs = paragraphs;
+
       model.Counter = 0;
 
-      resp.message(model.GeneralList[0]);
+      model.save(function(err, data){
+        if(err)
+          return console.log(err);
+        resp.message(data.GeneralList[parseInt(input[0])]);
+        close(res, resp);
+      });
 
-      close(res, resp);
+
+
+
     });
 
   } else if (input[0] === 'next') {
@@ -56,7 +64,7 @@ router.get('/', function(req, res) {
         return console.log(err);
 
       if (model.GeneralList.length == model.Counter) {
-        resp.message(model.GeneralList[model.Counter]);
+        resp.message(model.Paragraphs[model.Counter]);
         resp.message("~end of article~");
       } else {
         model.Counter += 1;
@@ -64,7 +72,7 @@ router.get('/', function(req, res) {
           if(err)
             return console.log(err);
         });
-        resp.message(model.GeneralList[model.Counter]);
+        resp.message(model.Paragraphs[model.Counter]);
       }
 
       close(res, resp);
@@ -146,10 +154,10 @@ function parseRSS(xml, schema, callback) {
       articleTitles +=  i + ": " + articles[i].title + "\n";
       list.push(articles[i].link);
     }
-
+    console.log(articleTitles);
     SMSModel.findOne({SMS: schema.SMS}, function(err, model){
       if(err)
-        return console.log(data);
+        return console.log(err);
       else if(model){
         model.GeneralList = list;
       }else{
@@ -158,7 +166,7 @@ function parseRSS(xml, schema, callback) {
       }
       model.save(function(err, data){
         if(err)
-          return console.log(data);
+          return console.log(err);
         callback(null, articleTitles);
       })
     })
@@ -188,32 +196,43 @@ function close(res, resp){
 
 
 function articulate(page) {
-  read(page, function(err, article, meta) {
-    if (err) return console.log(err);
 
-    // var cheerio = require('cheerio');
-    $ = cheerio.load(article.content);
+  request(url, function(error, response, html){
 
-    var paragraphs = [];
-    $('p').each(function(i, elem) {
-      paragraphs[i] = $(this).text();
-    });
+        // First we'll check to make sure no errors occurred when making the request
 
-    paragraphs.join(', ');
-    paragraphs = paragraphs.filter(function(n){ return n != "" });
+        if(!error){
+            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 
-    article.close();
-    return paragraphs;
-  });
+            var $ = cheerio.load(html);
+
+            // Finally, we'll define the variables we're going to capture
+
+            var title, release, rating;
+            var json = { title : "", release : "", rating : ""};
+            $('.header').filter(function(){
+
+         // Let's store the data we filter into a variable so we can easily see what's going on.
+              var data = $(this);
+              console.log("__________\n");
+              console.log(data);
+              return data;
+          })
+        }
+    })
+})
+
 }
 
 function checkimg(page) {
+
   read(page, function (err, article, meta) {
     $ = cheerio.load(article.content);
 
     var images = [];
     $('img').each(function(i, elem) {
       images[i] = $(this).text();
+
     });
 
     paragraphs.join(', ');
