@@ -24,7 +24,7 @@ router.get('/', function(req, res) {
 
 
   switch(input[0]){
-    case !isNaN(input[0]):
+    case num.match(/^\d+$/):
         SMS.find({SMS: req.query.From}, function(err, model){
             if(err)
                 return console.log(err);
