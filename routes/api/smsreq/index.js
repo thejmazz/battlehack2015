@@ -109,9 +109,10 @@ function parseRSS(xml, schema, callback) {
         if(err)
           return console.log(err);
         else if(data){
-          data.GeneralList = list;
           console.log("HERE\n");
           console.log(data);
+          data.GeneralList = list;
+
           data.save(function(err){
             if(err)
               return console.log(err);
