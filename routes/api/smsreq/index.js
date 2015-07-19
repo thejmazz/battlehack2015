@@ -200,31 +200,24 @@ function articulate(page) {
   request(page, function(error, response, html){
 
         // First we'll check to make sure no errors occurred when making the request
-        console.log("I am here");
-        if(!error){
-            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-            var $ = cheerio.load(html);
+        if(error)
+          return console.error(err);
 
-            // Finally, we'll define the variables we're going to capture
+        // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
+        var $ = cheerio.load(html);
+          //var data = $(this);
+          var paragraphs = []
+          $('p').each(function(i, elem){
 
-            var title, release, rating;
-            var json = { title : "", release : "", rating : ""};
-            $('.header').filter(function(){
-
-         // Let's store the data we filter into a variable so we can easily see what's going on.
-              //var data = $(this);
-              var paragraphs = []
-              $('p').each(function(i, elem){
-
-                 for(var y = 0; y < elem.children[j].length; y++)
-                    paragraphs.push(elem.children[j].data);
+             for(var y = 0; y < elem.children.length; y++)
+                paragraphs.push(elem.children[y]);
 
 
-              })
-              console.log(paragraphs);
-              return paragraphs;
-          }
-        }
+          })
+          console.log(paragraphs);
+          return paragraphs;
+      }
+
 
       })
     }
