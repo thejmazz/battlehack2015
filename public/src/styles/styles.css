@@ -10,6 +10,7 @@
  * A partial implementation of the Ruby display functions from Compass:
  * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
  */
+@import url(http://fonts.googleapis.com/css?family=Lobster);
 #messages-wrapper::-webkit-scrollbar {
   width: 12px;
   margin: 4px; }
@@ -197,8 +198,40 @@ body {
 h1#title {
   padding-top: 20px;
   display: inline-block;
-  border-bottom: 2px solid black;
-  transform: rotate(-20deg); }
+  font-family: "Lobster", cursive;
+  font-size: 4em; }
+
+#main-icons div {
+  text-align: center; }
+  #main-icons div i {
+    display: block;
+    font-size: 3em; }
+
+#submit-feed input {
+  width: 50%;
+  display: block;
+  margin: 0 auto; }
+
+#submit-feed i {
+  margin-top: 10px;
+  font-size: 50px;
+  width: 80px;
+  height: 80px;
+  padding: 10px;
+  border-radius: 50%;
+  color: black;
+  border: 2px solid black;
+  -webkit-transition: all false false, 500ms false false, ease false false;
+  -moz-transition: all false false false, 500ms false false false, ease false false false;
+  -o-transition: all false false false, 500ms false false false, ease false false false;
+  transition: all 500ms ease; }
+  #submit-feed i:hover {
+    background-color: black;
+    color: white; }
+
+#continue {
+  display: block;
+  text-decoration: none; }
 
 #header {
   height: 60px;

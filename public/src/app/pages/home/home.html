@@ -37,12 +37,27 @@
                 <h1 id="title">smster!</h1>
               </div>
 
-              <div>
-                Submit your own RSS feed for Toronto!
+              <div class="row" id="main-icons">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <i class="fa fa-mobile"></i>
+                  Access website screenshots and RSS feeds from your mobile device with no data
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <i class="fa fa-send"></i>
+                    Distribute your RSS feed to the local community
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <i class="fa fa-exchange"></i>
+                    Exchange and grow freely available content!
+                </div>
+              </div>
+
+              <div class="center" id="submit-feed">
+                <input placeholder="Submit your own RSS feed for Toronto! ($1)"></input>
                 <a href=# ng-click="purchase()">
-                    <img src="assets/paypal-checkout-button.png">
+                    <i class="fa fa-paypal"></i>
                 </a>
-                <a href="{{paypal_redirect}}" ng-show="redirect_ready">click here to go to PayPal</a>
+                <a id="continue" href="{{paypal_redirect}}" ng-show="redirect_ready">continue to PayPal</a>
               </div>
           </div>
       </div>
