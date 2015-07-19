@@ -22,6 +22,9 @@ angular.module('smser')
     }, {
       type: 'from',
       content: 'Try entering `site http://google.com`!'
+    }, {
+      type: 'from',
+      content: 'or `rss rssfeed.xml`!'
     }]
 
     $scope.addMsg = function() {
