@@ -183,11 +183,11 @@ function articulate(page, callback) {
 
               }
             }
-          }, function(){
-              callback(null, paragraphs)
-          });
-}
+          })
+          callback(null, paragraphs)
 
+        }
+}
 
 
 
