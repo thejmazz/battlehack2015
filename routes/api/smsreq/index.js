@@ -28,6 +28,7 @@ router.get('/', function(req, res) {
   var findrss = require("find-rss");
 
   if (!isNaN(parseInt(input[0]))) {
+    resp.message("Please wait a moment....");
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
         if(err)
           return console.log(err);
@@ -158,9 +159,9 @@ function close(res, resp){
 }
 
 
-function articulate(page) {
+function articulate(page, callback) {
 
-  request(page, function(error, response, html, callback){
+  request(page, function(error, response, html){
 
         // First we'll check to make sure no errors occurred when making the request
         if(error)
