@@ -25,7 +25,7 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
-  if(parseInt(input[0]) || parseInt(input) === 0){
+  if(parseInt(input[0]) >= 0){
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
