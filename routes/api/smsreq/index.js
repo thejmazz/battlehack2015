@@ -22,7 +22,7 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
-
+  console.log(parseInt(input[0]))
   switch(input[0]){
     case parseInt(input[0])!== NaN:
         resp.message("entered number");
