@@ -23,7 +23,7 @@ router.get('/', function(req, res) {
   var findrss = require("find-rss");
 
   if(parseInt(input[0]) !== NaN){
-
+    console.log("Here at NAN");
     SMS.findOne({SMS: req.query.From}, function(err, model){
       if(err)
       return console.log(err);
@@ -98,7 +98,7 @@ router.get('/', function(req, res) {
 function parseRSS(xml, schema, callback) {
   feed(xml, function(err, articles) {
     if (err)
-    return callback(null, "no feed found!");
+      return callback(null, "no feed found!");
     var articleTitles = ""
     var list = []
     for(var i = 0; i < articles.length; i++){
