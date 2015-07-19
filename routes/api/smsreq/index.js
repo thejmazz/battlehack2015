@@ -10,8 +10,9 @@ var SMS = App.Model("sms");
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
-  console.log(req.query.From);
-  //var smsModel = new SMS({SMS: resp.})
+
+  var smsModel = new SMS({SMS: req.query.From});
+
   // The TwiML response object will have functions on it that correspond
   // to TwiML "verbs" and "nouns". This example uses the "Say" verb.
   // Passing in a string argument sets the content of the XML tag.
@@ -48,7 +49,7 @@ router.get('/', function(req, res) {
 
     case "rss":
       resp.message("Please wait a moment...");
-      parseRSS(input[1], function(err, txt){
+      parseRSS(input[1], smsModel, function(err, txt){
         resp.message(txt);
         //Render the TwiML document using "toString"
         close(res, resp);
@@ -61,7 +62,7 @@ router.get('/', function(req, res) {
         if (err) return console.log(err);
 
         if (response.length === 1) {
-          parseRSS(response[0].url, function(err, txt) {
+          parseRSS(response[0].url, smsModel, function(err, txt) {
             resp.message(txt);
             close(res, resp);
           })
@@ -84,16 +85,17 @@ router.get('/', function(req, res) {
   }
 });
 
-
-function parseRSS(xml, callback) {
+function parseRSS(xml, schema, callback) {
   // var type = feed.identify(xml);
   feed(xml, function(err, articles) {
-      console.log(articles);
+      console.log(articles[0]);
       if (err)
         return callback(null, "no feed found!");
       var articleTitles = ""
+
       for(var i = 0; i < articles.length; i++){
         articleTitles +=  i + ": " + articles[i].title + "\n";
+        //schema.GeneralList.push(articles[i].url);
       }
       callback(null, articleTitles);
     })
