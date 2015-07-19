@@ -24,7 +24,7 @@ router.get('/', function(req, res) {
 
 
   switch(input[0]){
-    case input[0].match(/^\d+$/):
+    case input[0].match(/^\d+$/) === true:
         SMS.find({SMS: req.query.From}, function(err, model){
             if(err)
                 return console.log(err);
