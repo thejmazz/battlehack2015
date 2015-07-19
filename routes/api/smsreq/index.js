@@ -22,9 +22,9 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
-  console.log(input[0]);
+
   switch(input[0]){
-    case input[0].match(/^\d+$/) === true:
+    case parseInt(input[0])!== NaN:
         resp.message("entered number");
         SMS.findOne({SMS: req.query.From}, function(err, model){
             if(err)
