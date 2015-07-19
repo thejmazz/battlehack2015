@@ -10,7 +10,7 @@ var SMSSchema = new mongoose.Schema({
       type: [String]
     },
     Counter: {
-    	type : int
+    	type : Number
     }
 
 
