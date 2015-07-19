@@ -60,6 +60,10 @@ router.get('/', function(req, res) {
         resp.message("~end of article~");
       } else {
         model.Counter += 1;
+        model.save(function(err, data){
+          if(err)
+            return console.log(err);
+        });
         resp.message(model.GeneralList[model.Counter]);
       }
 
