@@ -209,8 +209,11 @@ function articulate(page) {
           var paragraphs = []
           $('p').each(function(i, elem){
 
-             for(var y = 0; y < elem.children.length; y++)
-                paragraphs.push(elem.children[y]);
+             for(var y = 0; y < elem.children.length; y++){
+              if(elem.children[y].name !== "p" || elem.children[y].type !== "text")
+                  continue;
+              paragraphs.push(elem.children[y]);
+            }
 
 
           })
