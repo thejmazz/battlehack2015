@@ -30,6 +30,7 @@
     "mongoose": "^4.0.5",
     "morgan": "^1.6.0",
     "node-readability": "^1.0.2",
+    "paypal-rest-sdk": "^1.6.0",
     "phantomjs": "^1.9.17",
     "request": "^2.58.0",
     "require": "^2.4.20",
