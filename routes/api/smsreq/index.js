@@ -186,7 +186,7 @@ function articulate(page, callback) {
           })
           callback(null, paragraphs)
 
-        }
+        });
 }
 
 
