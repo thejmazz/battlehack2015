@@ -42,7 +42,7 @@ router.get('/', function(req, res) {
       }*/
 
       var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
-      model.GeneralList = paragraphs;
+      model.paragraphs = paragraphs;
 
       model.Counter = 0;
 
@@ -64,7 +64,7 @@ router.get('/', function(req, res) {
         return console.log(err);
 
       if (model.GeneralList.length == model.Counter) {
-        resp.message(model.GeneralList[model.Counter]);
+        resp.message(model.Paragraphs[model.Counter]);
         resp.message("~end of article~");
       } else {
         model.Counter += 1;
@@ -72,7 +72,7 @@ router.get('/', function(req, res) {
           if(err)
             return console.log(err);
         });
-        resp.message(model.GeneralList[model.Counter]);
+        resp.message(model.Paragraphs[model.Counter]);
       }
 
       close(res, resp);
