@@ -118,7 +118,7 @@ function parseRSS(xml, schema, callback) {
             if(err)
               return console.log(err);*/
             callback(null, articleTitles);
-          })
+      //    })
       }  else {
 
           schema.save(function(err){
