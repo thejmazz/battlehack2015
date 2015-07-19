@@ -114,9 +114,9 @@ function parseRSS(xml, schema, callback) {
           console.log("data: " + data);
           data.GeneralList = list;
 
-          data.save(function(err){
+          /*data.save(function(err){
             if(err)
-              return console.log(err);
+              return console.log(err);*/
             callback(null, articleTitles);
           })
       }  else {
