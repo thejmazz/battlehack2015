@@ -32,14 +32,14 @@ router.get('/', function(req, res) {
       if(err)
         return console.log(err);
 
-      var images = checkimg(model.GeneralList[parseInt(input[0])]);
-      if (images) {
+    //  var images = checkimg(model.GeneralList[parseInt(input[0])]);
+      /*if (images) {
         client.messages.create({
           to: req.query.From,
           from: phone_num,
           mediaUrl: images[0].src
         })
-      }
+      }*/
 
       var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
       model.GeneralList = paragraphs;
