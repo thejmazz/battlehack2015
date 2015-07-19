@@ -22,17 +22,18 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
-  console.log(parseInt(input[0]) !== NaN);
+  if(parseInt(input[0]) !== NaN){
+
+    SMS.findOne({SMS: req.query.From}, function(err, model){
+    if(err)
+        return console.log(err);
+    resp.message(model.GeneralList[parseInt(input[0])]);
+    close(res, resp);
+    });
+
+  }else {
   switch(input[0]){
-    case parseInt(input[0])!== NaN:
-        resp.message("entered number");
-        SMS.findOne({SMS: req.query.From}, function(err, model){
-            if(err)
-                return console.log(err);
-            console.log(model);
-            close(res, resp);
-        })
-        break;
+
     case "commands":
       resp.message("you requested help");
       close(res, resp);
@@ -92,6 +93,7 @@ router.get('/', function(req, res) {
       close(res, resp);
 
   }
+}
 });
 
 function parseRSS(xml, schema, callback) {
