@@ -213,6 +213,7 @@ function articulate(page) {
               if(elem.children[y].name !== "p" || elem.children[y].type !== "text")
                   continue;
               paragraphs.push(elem.children[y]["data"]);
+              console.log(elem.children[y]["data"])
             }
 
 
