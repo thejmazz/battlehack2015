@@ -28,56 +28,20 @@ router.get('/', function(req, res) {
   var findrss = require("find-rss");
 
   if (!isNaN(parseInt(input[0]))) {
+    resp.message("Please wait a moment....");
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
-      if(err)
-        return console.log(err);
-
-    //  var images = checkimg(model.GeneralList[parseInt(input[0])]);
-      /*if (images) {
-        client.messages.create({
-          to: req.query.From,
-          from: phone_num,
-          mediaUrl: images[0].src
-        })
-      }*/
-
-      var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
-      model.paragraphs = paragraphs;
-
-      model.Counter = 0;
-
-      model.save(function(err, data){
         if(err)
           return console.log(err);
-        resp.message(data.GeneralList[parseInt(input[0])]);
-        close(res, resp);
+        articulate(model.GeneralList[parseInt(input[0])], function(err, par){
+          console.log(par);
+          resp.message(par);
+          close(res, resp);
+        });
+
       });
 
 
-
-
-    });
-
-  } else if (input[0] === 'next') {
-    SMSModel.findOne({SMS: req.query.From}, function(err, model){
-      if(err)
-        return console.log(err);
-
-      if (model.GeneralList.length == model.Counter) {
-        resp.message(model.Paragraphs[model.Counter]);
-        resp.message("~end of article~");
-      } else {
-        model.Counter += 1;
-        model.save(function(err, data){
-          if(err)
-            return console.log(err);
-        });
-        resp.message(model.Paragraphs[model.Counter]);
-      }
-
-      close(res, resp);
-
-    })} else {
+  } else {
     switch(input[0]){
 
       case "commands":
@@ -195,36 +159,31 @@ function close(res, resp){
 }
 
 
-function articulate(page) {
+function articulate(page, callback) {
 
   request(page, function(error, response, html){
 
         // First we'll check to make sure no errors occurred when making the request
-        console.log("I am here");
-        if(!error){
-            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-            var $ = cheerio.load(html);
+        if(error)
+          return console.error(err);
 
-            // Finally, we'll define the variables we're going to capture
+        // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
+        var $ = cheerio.load(html);
+          //var data = $(this);
+          var paragraphs = ""
 
-            var title, release, rating;
-            var json = { title : "", release : "", rating : ""};
-            $('.header').filter(function(){
-
-         // Let's store the data we filter into a variable so we can easily see what's going on.
-              //var data = $(this);
-              var paragraphs = []
-              $('p').each(function(i, elem){
-
-                //  for(var y = 0; y < elem.children[j].length; y++)
-                    paragraphs.push(elem.children);
-                })
-              })
-              console.log(paragraphs);
-              return paragraphs;
+          var p = $('p');
+          for ( var i=0; i<p.length; i++) {
+            for(var j = 0; j < p[i].children.length; j++){
+              console.log(p[i].children[j]);
+              if(p[i].children[j].data){
+              paragraph += (p.children[j].data);
+            }
           }
         }
-    )
+        callback(null, paragraphs);
+
+    });
 }
 
 
