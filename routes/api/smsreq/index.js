@@ -203,8 +203,8 @@ function articulate(page) {
 
         if(!error){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-
-            var $ = cheerio.load(html.content);
+            console.log(html);
+            var $ = cheerio.load(html);
 
             // Finally, we'll define the variables we're going to capture
 
