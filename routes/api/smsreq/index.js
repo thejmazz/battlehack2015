@@ -172,12 +172,13 @@ function articulate(page) {
           var p = $('p');
           for ( var i=0; i<p.length; i++) {
             for(var j = 0; j < p[i].children.length; j++){
-              console.log(p[i].children[j]);
+
               if(p[i].children[j].data){
               paragraphs += (p[i].children[j].data);
             }
           }
         }
+        console.log(paragraphs);
         return paragraphs;
 
     });
