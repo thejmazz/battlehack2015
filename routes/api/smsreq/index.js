@@ -214,9 +214,12 @@ function articulate(page) {
 
          // Let's store the data we filter into a variable so we can easily see what's going on.
               var data = $(this);
-              console.log("__________\n");
-              console.log(data);
-              return data;
+              var paragraphs = []
+              $('p').each(function(i, elem){
+                paragraphs[i] = elem;
+              })
+              console.log(paragraphs);
+              return paragraphs;
           })
         }
     })
