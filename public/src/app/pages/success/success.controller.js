@@ -14,6 +14,10 @@ angular.module('smser')
     console.log(PayerID);
 
 
+    $.get(baseUrl + 'api/purchase/success?paymentId=' + paymentId + '&token=' + token + '&PayerID=' + PayerID).done(function(data){
+      console.log(data);
+    })
+
     $scope.success = function() {
       alert('sdsdsd');
     }
