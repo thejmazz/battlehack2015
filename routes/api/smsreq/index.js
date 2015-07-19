@@ -77,6 +77,7 @@ router.get('/', function(req, res) {
           })
 
         } else {
+          console.log("here2");
           //list of rsses
           var rsslist = []
           for (var i = 0; i < response.length; i++) {
