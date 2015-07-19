@@ -31,19 +31,10 @@ router.get('/', function(req, res) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
-      var paragraphs = articulate(model.GeneralList[parseInt(input[0])], function(data){
-        model.paragraphs = data;
-        model.save(function(err, data){
-                if(err)
-                  return console.log(err);
-                resp.message(data.paragraphs);
-                close(res, resp);
-              });
-            });
-      });
-
-
-
+      var paragraphs = articulate(model.GeneralList[parseInt(input[0])], resp);
+            close(res, resp);
+        });
+    });
 
   } else {
     switch(input[0]){
@@ -163,7 +154,7 @@ function close(res, resp){
 }
 
 
-function articulate(page, callback) {
+function articulate(page, resp) {
 
   request(page, function(error, response, html){
 
@@ -179,12 +170,11 @@ function articulate(page, callback) {
           $('p').each(function(i, elem){
             for(var j = 0; j < elem.children.length; j++){
               if(elem.children[j].data){
-                paragraphs += (elem.children[j].data);
+                resp.message(elem.children[j].data);
 
               }
             }
           })
-          callback(null, paragraphs)
 
         });
 }
