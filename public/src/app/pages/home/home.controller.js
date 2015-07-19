@@ -16,6 +16,12 @@ angular.module('smser')
     }, {
       type: 'from',
       content: 'smster is an sms based API for accessing online content #yolo'
+    }, {
+      type: 'to',
+      content: 'Cool, how can I use it? #Battlehack'
+    }, {
+      type: 'from',
+      content: 'Try entering `site http://google.com`!'
     }]
 
     $scope.addMsg = function() {
@@ -25,21 +31,38 @@ angular.module('smser')
         var completeUrl = baseUrl + 'api/screen?url=' + url
         console.log(completeUrl);
 
-        $http.get(completeUrl).success(function(err,data) {
-          console.log(data);
 
+        $.get(completeUrl).done(function(data) {
+          console.log(data);
           $scope.msgs.push({
             type: 'to',
             content: $scope.typespace
           });
-          // $scope.msgs.push({
-          //   type: 'from',
-          //   content: '<img src="' + baseUrl + data + '">'
-          // })
+          $scope.msgs.push({
+            type: 'from',
+            image: baseUrl + data
+          })
+
           $scope.typespace = '';
-        }).error(function(err) {
-          console.log('err' + err);
-        });
+
+          $scope.$digest();
+        })
+
+        // $http.get(completeUrl).success(function(err,data) {
+        //   console.log(data);
+        //
+        //   $scope.msgs.push({
+        //     type: 'to',
+        //     content: $scope.typespace
+        //   });
+        //   // $scope.msgs.push({
+        //   //   type: 'from',
+        //   //   content: '<img src="' + baseUrl + data + '">'
+        //   // })
+        //   $scope.typespace = '';
+        // }).error(function(err) {
+        //   console.log('err' + err);
+        // });
       }
     };
 }]);
