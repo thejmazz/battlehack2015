@@ -1,19 +1,41 @@
 <div ng-controller="HomeCtrl" class="inherit-y">
     <!-- SMSer -->
     <div class="wrap inherit-y">
-
-      <div class="container">
       <div class="row" id="splash">
-          <div id="t1" class="col-md-4">
-            A
+          <div id="t1" class="col-lg-4 col-md-4 col-sm-12 col-xs-">
+            <div id="phone-wrap">
+              <div id="phone">
+                  <div id="camera"></div>
+                  <div id="speaker"></div>
+                  <div id="button-menu" class="phone-button"> <i class="fa fa-bars"></i> </div>
+                  <div id="button-home" class="phone-button"> <i class="fa fa-home"></i> </div>
+                  <div id="button-back" class="phone-button"> <i class="fa fa-long-arrow-left"></i> </div>
+
+                  <div id="messages-wrapper">
+                    <ul id="messages">
+                      <li ng-repeat="msg in msgs" class="{{msg.type}} msg">
+                        {{msg.content}}
+                        <!--<div class="triangle"></div>-->
+                        <p></p>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div id="typespace">
+                      <input ng-model="typespace" type="text"></text>
+                      <div id="submit" ng-click="addMsg()">
+                          <i class="fa fa-hand-o-right"></i>
+                      </div>
+                      <div class="clear"></div>
+                  </div>
+              </div>
+            </div>
           </div>
-          <div id="t2" class="col-md-4">
-            B
-          </div>
-          <div id="t3" class="col-md-4">
-            C
+          <div id="t2" class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+              <div class="center">
+                <h1 id="title">ssmster!</h1>
+              </div>
           </div>
       </div>
-    </div>
     </div>
 </div>

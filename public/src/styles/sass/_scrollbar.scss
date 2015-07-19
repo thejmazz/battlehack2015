@@ -1,0 +1,17 @@
+#messages-wrapper {
+    &::-webkit-scrollbar {
+        width: 12px;
+        margin: 4px;
+        background: red;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $indigo-400;
+    }
+    &::-moz-scrollbar {
+        width: 12px;
+        margin: 4px;
+    }
+    &::-moz-scrollbar-thumb {
+        background: $indigo-400;
+    }
+}
