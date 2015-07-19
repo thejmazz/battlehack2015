@@ -31,8 +31,9 @@ router.get('/', function(req, res) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
         if(err)
           return console.log(err);
-        articulate(model.GeneralList[parseInt(input[0])], resp)
-        console.log(resp.toString());
+        var par = articulate(model.GeneralList[parseInt(input[0])])
+        console.log(par);
+        resp.message(par);
         close(res, resp);
       });
 
@@ -155,7 +156,7 @@ function close(res, resp){
 }
 
 
-function articulate(page, resp) {
+function articulate(page) {
 
   request(page, function(error, response, html){
 
@@ -168,16 +169,17 @@ function articulate(page, resp) {
           //var data = $(this);
           var paragraphs = ""
 
-          $('p').each(function(i, elem){
+          var p = $('p');
+          for ( var i=0; i<p.length; i++) {
             for(var j = 0; j < elem.children.length; j++){
               if(elem.children[j].data){
-                resp.message(elem.children[j].data);
-
-              }
+              paragraph += (elem.children[j].data);
             }
-          })
+          }
+        }
+        return paragraphs;
 
-        });
+    });
 }
 
 
