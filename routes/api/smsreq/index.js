@@ -3,9 +3,11 @@ var client = require('twilio')('AC44e4193dd5a5565845962f8f0cd23657', 'a5660fce73
 var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
+var mongoose = require('mongoose');
 var baseUrl = 'http://45.55.193.224/';
 var SMS = App.Model("sms");
 
+mongoose.connect("mongodb://localhost/smsdb")
 
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
@@ -50,7 +52,6 @@ router.get('/', function(req, res) {
       parseRSS(input[1], smsModel, function(err, txt){
         if(err)
           return console.log(err);
-        console.log("text: " + txt);
         resp.message(txt);
         close(res, resp);
       });
@@ -96,12 +97,12 @@ function parseRSS(xml, schema, callback) {
         articleTitles +=  i + ": " + articles[i].title + "\n";
         schema.GeneralList.push(articles[i].link);
       }
-      /*schema.save(function(err){
+      schema.save(function(err){
         if(err)
           return console.log(err)
         callback(null, articleTitles);
-      })*/
-      callback(null, articleTitles);
+      })
+    //  callback(null, articleTitles);
     })
   }
 
