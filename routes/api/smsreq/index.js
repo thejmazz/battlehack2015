@@ -31,8 +31,6 @@ router.get('/', function(req, res) {
     case "site":
       resp.message("Please wait a moment...");
       request(baseUrl + "api/screen/?url=" + input[1], function (error, response, body) {
-        //console.log(body);
-        console.log(baseUrl + body);
       client.messages.create({
         to: req.query.From,
         from: "+12892160973",
@@ -48,10 +46,10 @@ router.get('/', function(req, res) {
       break;
 
     case "rss":
+      console.log("I am here");
       resp.message("Please wait a moment...");
       parseRSS(input[1], smsModel, function(err, txt){
         resp.message(txt);
-        //Render the TwiML document using "toString"
         close(res, resp);
       });
       break;
@@ -81,7 +79,8 @@ router.get('/', function(req, res) {
       });
       break;
     default:
-      //type
+      resp.message("invalid command");
+      close(res, resp);
 
   }
 });
