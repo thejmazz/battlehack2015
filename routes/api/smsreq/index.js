@@ -213,10 +213,10 @@ function articulate(page) {
             $('.header').filter(function(){
 
          // Let's store the data we filter into a variable so we can easily see what's going on.
-              var data = $(this);
+              //var data = $(this);
               var paragraphs = []
               $('p').each(function(i, elem){
-                paragraphs[i] = $('p').next.body;
+                paragraphs[i] = $(this).text;
               })
               console.log(paragraphs);
               return paragraphs;
