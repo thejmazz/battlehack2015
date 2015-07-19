@@ -24,7 +24,7 @@ router.get('/', function(req, res) {
 
 
   switch(input[0]){
-    case num.match(/^\d+$/):
+    case input[0].match(/^\d+$/):
         SMS.find({SMS: req.query.From}, function(err, model){
             if(err)
                 return console.log(err);
@@ -104,11 +104,25 @@ function parseRSS(xml, schema, callback) {
         articleTitles +=  i + ": " + articles[i].title + "\n";
         schema.GeneralList.push(articles[i].link);
       }
-      schema.save(function(err){
+      SMS.find({SMS: schema.SMS}, function(err, data){
         if(err)
-          return console.log(err)
-        callback(null, articleTitles);
+          return console.log(err);
+        else if(data)
+          data.GeneralList = schema.GeneralList
+          data.save(function(err){
+            if(err)
+              return console.log(err);
+            callback(null, articleTitles);
+          })
+        else {
+          schema.save(function(err){
+            if(err)
+              return console.log(err)
+            callback(null, articleTitles);
+          });
+        }
       })
+
     //  callback(null, articleTitles);
     })
   }
