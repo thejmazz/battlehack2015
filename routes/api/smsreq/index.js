@@ -174,7 +174,7 @@ function articulate(page) {
             for(var j = 0; j < p[i].children.length; j++){
               console.log(p[i].children[j]);
               if(p[i].children[j].data){
-              paragraph += (p[i].children[j].data);
+              paragraphs += (p[i].children[j].data);
             }
           }
         }
