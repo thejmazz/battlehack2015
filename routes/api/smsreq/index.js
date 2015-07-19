@@ -50,6 +50,8 @@ router.get('/', function(req, res) {
       console.log(input[1]);
       resp.message("Please wait a moment...");
       parseRSS(input[1], smsModel, function(err, txt){
+        if(err)
+          return console.log(err);
         resp.message(txt);
         close(res, resp);
       });
