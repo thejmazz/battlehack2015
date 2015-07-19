@@ -214,7 +214,7 @@ function articulate(page) {
                 console.log(elem.children[y])
               }
             })
-          }
+
           //console.log(paragraphs);
           return paragraphs;
 
