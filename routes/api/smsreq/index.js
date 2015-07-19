@@ -22,10 +22,11 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
-
+  console.log(input[0]);
   switch(input[0]){
     case input[0].match(/^\d+$/) === true:
-        SMS.find({SMS: req.query.From}, function(err, model){
+        resp.message("entered number");
+        SMS.findOne({SMS: req.query.From}, function(err, model){
             if(err)
                 return console.log(err);
             console.log(model);
