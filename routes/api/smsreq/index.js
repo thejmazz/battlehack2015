@@ -45,9 +45,16 @@ router.get('/', function(req, res) {
       model.GeneralList = paragraphs;
       model.Counter = 0;
 
-      resp.message(model.GeneralList[0]);
+      model.save(function(err, data){
+        if(err)
+          return console.log(err);
+        resp.message(model.GeneralList[0]);
+        close(res, resp);
+      });
 
-      close(res, resp);
+
+
+
     });
 
   } else if (input[0] === 'next') {
@@ -146,10 +153,10 @@ function parseRSS(xml, schema, callback) {
       articleTitles +=  i + ": " + articles[i].title + "\n";
       list.push(articles[i].link);
     }
-
+    console.log(articleTitles);
     SMSModel.findOne({SMS: schema.SMS}, function(err, model){
       if(err)
-        return console.log(data);
+        return console.log(err);
       else if(model){
         model.GeneralList = list;
       }else{
@@ -158,7 +165,7 @@ function parseRSS(xml, schema, callback) {
       }
       model.save(function(err, data){
         if(err)
-          return console.log(data);
+          return console.log(err);
         callback(null, articleTitles);
       })
     })
