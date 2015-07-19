@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
 
     //console.log(binPath);
     //console.log(req.query.url);
-
+    
     var date = new Date();
 
     var fileName = req.query.url
@@ -46,10 +46,10 @@ router.get('/', function(req, res) {
         //console.log('stderr: ' + stderr);
 
         //res.send('Successfully rendered ' + fileName + '\n');
-        var filePath = path.join(__dirname, '../../../', fileMiniPath + '.' + format)
+        //var filePath = path.join(__dirname, '../../../', fileMiniPath + '.' + format)
 
-        //res.send(filePath)
-        res.sendFile(filePath);
+        res.send(fileMiniPath.replace('public/src/', '') + '.png');
+        //res.sendFile(filePath);
     });
 });
 

@@ -3,9 +3,18 @@ var client = require('twilio')('AC44e4193dd5a5565845962f8f0cd23657', 'a5660fce73
 var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
+var mongoose = require('mongoose');
+var baseUrl = 'http://45.55.193.224/';
+var SMS = App.Model("sms");
+
+mongoose.connect("mongodb://localhost/smsdb")
+
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
+
+  var smsModel = new SMS({SMS: req.query.From});
+
   // The TwiML response object will have functions on it that correspond
   // to TwiML "verbs" and "nouns". This example uses the "Say" verb.
   // Passing in a string argument sets the content of the XML tag.
@@ -13,7 +22,7 @@ router.get('/', function(req, res) {
 
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
-  console.log(input);
+
 
   switch(input[0]){
     case "commands":
@@ -22,29 +31,31 @@ router.get('/', function(req, res) {
       break;
 
     case "site":
-    //request("http://localhost:9001/api/screen/?url=" + input[1], function (error, response, body) {
-
+      resp.message("Please wait a moment...");
+      request(baseUrl + "api/screen/?url=" + input[1], function (error, response, body) {
       client.messages.create({
         to: req.query.From,
         from: "+12892160973",
-        mediaUrl: 'http://localhost:9001/api/screen/?url=' + input[1]
+        mediaUrl: baseUrl + body
       }, function(err, message) {
         if(err) return console.log(err);
         process.stdout.write(message.sid);
         close(res, resp);
       });
-
-    //})
+    });
 
       break;
 
     case "rss":
+      console.log(resp);
       resp.message("Please wait a moment...");
-      parseRSS(input[1], function(err, txt){
+      parseRSS(input[1], smsModel, function(err, txt){
+        if(err)
+          return console.log(err);
         resp.message(txt);
-        //Render the TwiML document using "toString"
         close(res, resp);
       });
+      break;
 
     case "read":
       resp.message("Please wait a moment...");
@@ -53,7 +64,7 @@ router.get('/', function(req, res) {
         if (err) return console.log(err);
 
         if (response.length === 1) {
-          parseRSS(response[0].url, function(err, txt) {
+          parseRSS(response[0].url, smsModel, function(err, txt) {
             resp.message(txt);
             close(res, resp);
           })
@@ -66,27 +77,32 @@ router.get('/', function(req, res) {
           }
           resp.message(rsslist.join());
         }
-
-        console.log(response);
       });
-
+      break;
     default:
-      //type
+      resp.message("invalid command");
+      close(res, resp);
 
   }
 });
 
-
-function parseRSS(xml, callback) {
+function parseRSS(xml, schema, callback) {
   // var type = feed.identify(xml);
   feed(xml, function(err, articles) {
       if (err)
         return callback(null, "no feed found!");
       var articleTitles = ""
+
       for(var i = 0; i < articles.length; i++){
         articleTitles +=  i + ": " + articles[i].title + "\n";
+        schema.GeneralList.push(articles[i].link);
       }
-      callback(null, articleTitles);
+      schema.save(function(err){
+        if(err)
+          return console.log(err)
+        callback(null, articleTitles);
+      })
+    //  callback(null, articleTitles);
     })
   }
 
