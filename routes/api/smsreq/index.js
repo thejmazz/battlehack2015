@@ -99,24 +99,24 @@ function parseRSS(xml, schema, callback) {
       if (err)
         return callback(null, "no feed found!");
       var articleTitles = ""
-
+      var list = []
       for(var i = 0; i < articles.length; i++){
         articleTitles +=  i + ": " + articles[i].title + "\n";
-        schema.GeneralList.push(articles[i].link);
+        list.push(articles[i].link);
       }
+
       SMS.find({SMS: schema.SMS}, function(err, data){
         if(err)
           return console.log(err);
         else if(data){
-          console.log("data: " + data);
-          console.log("schema" + schema);
-        //  data.GeneralList = schema.GeneralList
+          data.GeneralList = list;
           data.save(function(err){
             if(err)
               return console.log(err);
             callback(null, articleTitles);
           })
       }  else {
+
           schema.save(function(err){
             if(err)
               return console.log(err)
