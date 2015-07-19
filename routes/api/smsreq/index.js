@@ -171,9 +171,10 @@ function articulate(page) {
 
           var p = $('p');
           for ( var i=0; i<p.length; i++) {
-            for(var j = 0; j < elem.children.length; j++){
-              if(elem.children[j].data){
-              paragraph += (elem.children[j].data);
+            for(var j = 0; j < p[i].children.length; j++){
+              console.log(p[i].children[j]);
+              if(p[i].children[j].data){
+              paragraph += (p[i].children[j].data);
             }
           }
         }
