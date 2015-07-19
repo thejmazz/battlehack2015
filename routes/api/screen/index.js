@@ -4,7 +4,7 @@ var cp = require('child_process');
 var phantomjs = require('phantomjs');
 var binPath = phantomjs.path;
 
-var screenDir = 'screens';
+var screenDir = 'public/src/screens';
 var format = 'png';
 
 
@@ -46,10 +46,10 @@ router.get('/', function(req, res) {
         //console.log('stderr: ' + stderr);
 
         //res.send('Successfully rendered ' + fileName + '\n');
-        var filePath = path.join(__dirname, '../../../', fileMiniPath + '.' + format)
+        //var filePath = path.join(__dirname, '../../../', fileMiniPath + '.' + format)
 
-        //res.send(filePath)
-        res.sendFile(filePath);
+        res.send(fileMiniPath.replace('public/src/', '') + '.png');
+        //res.sendFile(filePath);
     });
 });
 
