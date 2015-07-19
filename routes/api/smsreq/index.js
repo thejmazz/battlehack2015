@@ -196,27 +196,32 @@ function close(res, resp){
 
 
 function articulate(page) {
-  console.log("Page:" + page);
-  read(page, function(err, article, meta) {
-    if(err)
-      return console.error(err);
-    console.log(article);
-    /*if (err) return console.log(err);
 
-    // var cheerio = require('cheerio');
-    $ = cheerio.load(article.content);
+  request(url, function(error, response, html){
 
-    var paragraphs = [];
-    $('p').each(function(i, elem) {
-      paragraphs[i] = $(this).text();
-    });
+        // First we'll check to make sure no errors occurred when making the request
 
-  //  paragraphs.join(', ');
-    //paragraphs = paragraphs.filter(function(n){ return n != "" });
-    console.log("paragraphs:" + paragraphs);
-    article.close();
-    return paragraphs;*/
-  });
+        if(!error){
+            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
+
+            var $ = cheerio.load(html);
+
+            // Finally, we'll define the variables we're going to capture
+
+            var title, release, rating;
+            var json = { title : "", release : "", rating : ""};
+            $('.header').filter(function(){
+
+         // Let's store the data we filter into a variable so we can easily see what's going on.
+              var data = $(this);
+              console.log("__________\n");
+              console.log(data);
+              return data;
+          })
+        }
+    })
+})
+
 }
 
 function checkimg(page) {
