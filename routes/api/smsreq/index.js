@@ -24,6 +24,14 @@ router.get('/', function(req, res) {
 
 
   switch(input[0]){
+    case !isNaN(input[0]):
+        SMS.find({SMS: req.query.From}, function(err, model){
+            if(err)
+                return console.log(err);
+            console.log(model);
+            close(res, resp);
+        })
+        break;
     case "commands":
       resp.message("you requested help");
       close(res, resp);
