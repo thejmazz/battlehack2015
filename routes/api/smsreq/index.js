@@ -27,17 +27,39 @@ router.get('/', function(req, res) {
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
 
+  var smsModel = new SMSModel({SMS: req.query.From});
+
+
   if (!isNaN(parseInt(input[0]))) {
     resp.message("Please wait a moment....");
     //close(res, resp);
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
         if(err)
           return console.log(err);
-        articulate(model.GeneralList[parseInt(input[0])], function(err, par){
-          console.log(par);
-          resp.message(par);
-          close(res, resp);
-        });
+
+          request(model.GeneralList[parseInt(input[0])], function(error, response, html){
+
+                // First we'll check to make sure no errors occurred when making the request
+                if(error)
+                  return console.error(err);
+
+                // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
+                var $ = cheerio.load(html);
+                  //var data = $(this);
+                  var paragraphs = ""
+
+                  var p = $('p');
+                  for ( var i=0; i<p.length; i++) {
+                    for(var j = 0; j < p[i].children.length; j++){
+                      if(p[i].children[j].data){
+                        paragraphs += (p.children[j].data);
+                    }
+                  }
+                }
+                console.log(paragraphs);
+                resp.message(paragraphs);
+                close(res, resp);
+              });
 
       });
 
