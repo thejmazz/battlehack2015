@@ -108,25 +108,8 @@ function parseRSS(xml, schema, callback) {
       }
 
       SMS.findOne({SMS: schema.SMS}, function(err, data){
-        if(err)
-          return console.log(err);
-        else if(data){
-          console.log("data: " + data);
-          data.GeneralList = list;
-
-          /*data.save(function(err){
-            if(err)
-              return console.log(err);*/
-            callback(null, articleTitles);
-      //    })
-      }  else {
-
-          schema.save(function(err){
-            if(err)
-              return console.log(err)
-            callback(null, articleTitles);
-          });
-        }
+        console.log(data);
+        callback(null, "done");
       })
 
     //  callback(null, articleTitles);
