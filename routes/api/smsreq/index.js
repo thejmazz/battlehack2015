@@ -43,9 +43,7 @@ router.get('/', function(req, res) {
 
       var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
       model.GeneralList = paragraphs;
-      console.log("articulate: ")
-      console.log(paragraphs);
-      console.log("\n_______\n")
+
       model.Counter = 0;
 
       model.save(function(err, data){
@@ -204,11 +202,10 @@ function articulate(page) {
 
     // var cheerio = require('cheerio');
     $ = cheerio.load(article.content);
-
+    console.log("$:\n" + $)
     var paragraphs = [];
     $('p').each(function(i, elem) {
       paragraphs[i] = $(this).text();
-      console.log(i + paragarphs[i]);
     });
 
   //  paragraphs.join(', ');
