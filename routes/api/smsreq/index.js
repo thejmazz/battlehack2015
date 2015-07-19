@@ -4,15 +4,15 @@ var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
 var baseUrl = 'http://45.55.193.224/';
-var SMS = App.Model("sms");
-
+var SMSdb = App.Model("sms");
+var phone_num = "+16475600682" //"+12892160973",
 
 
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
 
-  var smsModel = new SMS({SMS: req.query.From});
+  var smsModel = new SMSdb({SMS: req.query.From});
 
   // The TwiML response object will have functions on it that correspond
   // to TwiML "verbs" and "nouns". This example uses the "Say" verb.
@@ -23,7 +23,7 @@ router.get('/', function(req, res) {
   var findrss = require("find-rss");
 
   if(parseInt(input[0])){
-    SMS.findOne({SMS: req.query.From}, function(err, model){
+    SMSdb.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
       resp.message(model.GeneralList[parseInt(input[0])]);
@@ -43,7 +43,7 @@ router.get('/', function(req, res) {
       request(baseUrl + "api/screen/?url=" + input[1], function (error, response, body) {
         client.messages.create({
           to: req.query.From,
-          from: "+12892160973",
+          from: phone_num,
           mediaUrl: baseUrl + body
         }, function(err, message) {
           if(err) return console.log(err);
@@ -77,7 +77,7 @@ router.get('/', function(req, res) {
           })
 
         } else {
-
+          //list of rsses
           var rsslist = []
           for (var i = 0; i < response.length; i++) {
             rsslist.push(i + ": " + response[i].title + "\n");
@@ -104,9 +104,8 @@ function parseRSS(xml, schema, callback) {
       articleTitles +=  i + ": " + articles[i].title + "\n";
       list.push(articles[i].link);
     }
-    console.log("Here and searching\n");
-    console.log(schema.SMS);
-    SMS.findOne({SMS: schema.SMS}, function(err, model){
+
+    SMSdb.findOne({SMS: schema.SMS}, function(err, model){
       if(err)
         return console.log(data);
       else if(model){
