@@ -10,7 +10,7 @@ var SMS = App.Model("sms");
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
-  console.log(req.From);
+  console.log(req.query.From);
   //var smsModel = new SMS({SMS: resp.})
   // The TwiML response object will have functions on it that correspond
   // to TwiML "verbs" and "nouns". This example uses the "Say" verb.
