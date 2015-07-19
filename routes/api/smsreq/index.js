@@ -198,11 +198,12 @@ function close(res, resp){
 function articulate(page) {
   console.log("Page:" + page);
   read(page, function(err, article, meta) {
-    if (err) return console.log(err);
+    console.log(article);
+    /*if (err) return console.log(err);
 
     // var cheerio = require('cheerio');
     $ = cheerio.load(article.content);
-    console.log("$:\n" + $)
+
     var paragraphs = [];
     $('p').each(function(i, elem) {
       paragraphs[i] = $(this).text();
@@ -212,7 +213,7 @@ function articulate(page) {
     //paragraphs = paragraphs.filter(function(n){ return n != "" });
     console.log("paragraphs:" + paragraphs);
     article.close();
-    return paragraphs;
+    return paragraphs;*/
   });
 }
 
