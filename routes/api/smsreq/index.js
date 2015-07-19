@@ -206,19 +206,19 @@ function articulate(page) {
         // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
         var $ = cheerio.load(html);
           //var data = $(this);
-          var paragraphs = []
+          var paragraphs = ""
           $('p').each(function(i, elem){
 
             for(var j = 0; j < elem.children.length; j++){
               if(elem.children[j].data){
-                paragraphs.push(elem.children[j].data);
-                console.log(elem.children[j].data)
+                paragraphs += (elem.children[j].data);
+
 
               }
             }
             })
 
-          //console.log(paragraphs);
+            console.log(paragraphs);
           return paragraphs;
 
 
