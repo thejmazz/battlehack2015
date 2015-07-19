@@ -26,11 +26,11 @@ router.get('/', function(req, res) {
   var findrss = require("find-rss");
 
   if(!isNaN(parseInt(input[0]))){
-    console.log("I am here");
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
       resp.message(model.GeneralList[parseInt(input[0])]);
+      close(res, resp);
     });
 
   }else {
