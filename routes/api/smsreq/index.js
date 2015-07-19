@@ -29,12 +29,13 @@ router.get('/', function(req, res) {
 
   if (!isNaN(parseInt(input[0]))) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
-      if(err)
-        return console.log(err);
-      var paragraphs = articulate(model.GeneralList[parseInt(input[0])], resp);
-            close(res, resp);
-        });
-    });
+        if(err)
+          return console.log(err);
+        articulate(model.GeneralList[parseInt(input[0])], resp)
+        console.log(resp.toString());
+        close(res, resp);
+      });
+
 
   } else {
     switch(input[0]){
