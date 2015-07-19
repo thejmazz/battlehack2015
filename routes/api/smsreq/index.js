@@ -3,11 +3,10 @@ var client = require('twilio')('AC44e4193dd5a5565845962f8f0cd23657', 'a5660fce73
 var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
-var mongoose = require('mongoose');
 var baseUrl = 'http://45.55.193.224/';
 var SMS = App.Model("sms");
 
-mongoose.connect("mongodb://localhost/smsdb")
+
 
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();

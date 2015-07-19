@@ -1,6 +1,7 @@
 // ==== Node Modules ====
 var express = require('express');
 var colors = require('colors');
+var mongoose = require('mongoose');
 
 // ==== App ====
 var App = global.App = require('./lib/App');
@@ -11,6 +12,7 @@ var app = express();
 
 // ==== Connect to MongoDB ====
 //mongoose.connect('mongodb://localhost/fba')
+mongoose.connect("mongodb://localhost/smsdb");
 
 // ==== Apply global middleware ====
 App.MW('global-middleware').apply(app);
