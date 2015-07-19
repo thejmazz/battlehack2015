@@ -216,7 +216,6 @@ function articulate(page) {
           })
           console.log(paragraphs);
           return paragraphs;
-      }
 
 
       })
