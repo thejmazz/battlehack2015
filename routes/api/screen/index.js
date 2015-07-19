@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
 
     //console.log(binPath);
     //console.log(req.query.url);
-
+    
     var date = new Date();
 
     var fileName = req.query.url

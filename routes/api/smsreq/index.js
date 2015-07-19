@@ -4,6 +4,9 @@ var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
 var baseUrl = 'http://45.55.193.224/';
+var sms = App.Model("sms");
+
+
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
@@ -24,7 +27,7 @@ router.get('/', function(req, res) {
 
     case "site":
       resp.message("Please wait a moment...");
-    request(baseUrl + "api/screen/?url=" + input[1], function (error, response, body) {
+      request(baseUrl + "api/screen/?url=" + input[1], function (error, response, body) {
         //console.log(body);
         console.log(baseUrl + body);
       client.messages.create({
@@ -83,6 +86,7 @@ router.get('/', function(req, res) {
 function parseRSS(xml, callback) {
   // var type = feed.identify(xml);
   feed(xml, function(err, articles) {
+      console.log(articles);
       if (err)
         return callback(null, "no feed found!");
       var articleTitles = ""
