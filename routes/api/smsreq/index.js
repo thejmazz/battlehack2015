@@ -96,7 +96,6 @@ router.get('/', function(req, res) {
 });
 
 function parseRSS(xml, schema, callback) {
-  // var type = feed.identify(xml);
   feed(xml, function(err, articles) {
       if (err)
         return callback(null, "no feed found!");
@@ -106,7 +105,8 @@ function parseRSS(xml, schema, callback) {
         articleTitles +=  i + ": " + articles[i].title + "\n";
         list.push(articles[i].link);
       }
-
+      console.log("HEre and searching\n");
+      console.log(schema.SMS);
       SMS.findOne({SMS: schema.SMS}, function(err, data){
         console.log(data);
         callback(null, "done");
