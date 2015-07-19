@@ -88,16 +88,20 @@ router.get('/', function(req, res) {
 function parseRSS(xml, schema, callback) {
   // var type = feed.identify(xml);
   feed(xml, function(err, articles) {
-      console.log(articles[0]);
       if (err)
         return callback(null, "no feed found!");
       var articleTitles = ""
 
       for(var i = 0; i < articles.length; i++){
         articleTitles +=  i + ": " + articles[i].title + "\n";
-        //schema.GeneralList.push(articles[i].url);
+        schema.GeneralList.push(articles[i].link);
       }
-      callback(null, articleTitles);
+      schema.save(function(err){
+        if(err)
+          return console.log(err)
+        callback(null, articleTitles);
+      })
+
     })
   }
 
