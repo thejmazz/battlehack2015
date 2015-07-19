@@ -30,6 +30,7 @@
     "morgan": "^1.6.0",
     "phantomjs": "^1.9.17",
     "request": "^2.58.0",
+    "require": "^2.4.20",
     "twilio": "^2.2.1"
   },
   "devDependencies": {

@@ -2,6 +2,7 @@ var router = require('express').Router();
 var client = require('twilio')('AC44e4193dd5a5565845962f8f0cd23657', 'a5660fce732c184fad44538b12e89083');
 var twilio = require('twilio');
 var feed = require("feed-read");
+var request = require("request");
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
@@ -20,16 +21,21 @@ router.get('/', function(req, res) {
       close(res, resp);
       break;
 
-    case "pic":
+    case "site":
+    request("http://localhost:9001/api/screen/?url=" + input[1], function (error, response, body) {
+
       client.messages.create({
         to: req.query.From,
         from: "+12892160973",
-        mediaUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Toronto_Maple_Leafs_logo.svg/178px-Toronto_Maple_Leafs_logo.svg.png"
+        mediaUrl: body
       }, function(err, message) {
-        console.log(err);
+        if(err) return console.log(err);
         process.stdout.write(message.sid);
         close(res, resp);
       });
+
+    })
+
       break;
 
     case "rss":

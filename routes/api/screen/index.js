@@ -4,7 +4,7 @@ var cp = require('child_process');
 var phantomjs = require('phantomjs');
 var binPath = phantomjs.path;
 
-var screenDir = 'screens';
+var screenDir = '../../public/screens';
 var format = 'png';
 
 
