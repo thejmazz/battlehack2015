@@ -4,7 +4,7 @@ var baseUrl = 'http://45.55.193.224/';
 
 angular.module('smser')
 
-.controller('HomeCtrl', ['$scope', function($scope) {
+.controller('HomeCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.title = 'SMS';
 
     $scope.msgs = [{
@@ -25,7 +25,7 @@ angular.module('smser')
         var completeUrl = baseUrl + 'api/screen?url=' + url
         console.log(completeUrl);
 
-        $.get(completeUrl).success(function(err,data) {
+        $http.get(completeUrl).success(function(err,data) {
           console.log(data);
 
           $scope.msgs.push({
