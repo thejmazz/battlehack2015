@@ -206,10 +206,11 @@ function articulate(page) {
     var paragraphs = [];
     $('p').each(function(i, elem) {
       paragraphs[i] = $(this).text();
+      console.log(i + paragarphs[i]);
     });
 
-    paragraphs.join(', ');
-    paragraphs = paragraphs.filter(function(n){ return n != "" });
+  //  paragraphs.join(', ');
+    //paragraphs = paragraphs.filter(function(n){ return n != "" });
     console.log("paragraphs:" + paragraphs);
     article.close();
     return paragraphs;
