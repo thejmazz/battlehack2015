@@ -31,53 +31,18 @@ router.get('/', function(req, res) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
-
-    //  var images = checkimg(model.GeneralList[parseInt(input[0])]);
-      /*if (images) {
-        client.messages.create({
-          to: req.query.From,
-          from: phone_num,
-          mediaUrl: images[0].src
-        })
-      }*/
-
       var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
       model.paragraphs = paragraphs;
-
-      model.Counter = 0;
 
       model.save(function(err, data){
         if(err)
           return console.log(err);
-        resp.message(data.GeneralList[parseInt(input[0])]);
+        resp.message(data.paragraphs);
         close(res, resp);
       });
-
-
-
-
     });
 
-  } else if (input[0] === 'next') {
-    SMSModel.findOne({SMS: req.query.From}, function(err, model){
-      if(err)
-        return console.log(err);
-
-      if (model.GeneralList.length == model.Counter) {
-        resp.message(model.Paragraphs[model.Counter]);
-        resp.message("~end of article~");
-      } else {
-        model.Counter += 1;
-        model.save(function(err, data){
-          if(err)
-            return console.log(err);
-        });
-        resp.message(model.Paragraphs[model.Counter]);
-      }
-
-      close(res, resp);
-
-    })} else {
+  } else {
     switch(input[0]){
 
       case "commands":
@@ -217,8 +182,6 @@ function articulate(page) {
               }
             }
             })
-
-            console.log(paragraphs);
           return paragraphs;
 
 
