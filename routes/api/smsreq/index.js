@@ -31,7 +31,7 @@ router.get('/', function(req, res) {
     SMSModel.findOne({SMS: req.query.From}, function(err, model){
       if(err)
         return console.log(err);
-
+        
     //  var images = checkimg(model.GeneralList[parseInt(input[0])]);
       /*if (images) {
         client.messages.create({
@@ -220,30 +220,8 @@ function articulate(page) {
           })
         }
     })
-})
-
 }
 
-function checkimg(page) {
-
-  read(page, function (err, article, meta) {
-    $ = cheerio.load(article.content);
-
-    var images = [];
-    $('img').each(function(i, elem) {
-      images[i] = $(this).text();
-
-    });
-
-    paragraphs.join(', ');
-    paragraphs = paragraphs.filter(function(n){ return n != "" });
-
-    article.close();
-
-    return images;
-
-  })
-}
 
 
 module.exports = router;
