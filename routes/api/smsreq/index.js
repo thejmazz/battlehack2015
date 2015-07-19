@@ -52,7 +52,7 @@ router.get('/', function(req, res) {
                   for ( var i=0; i<p.length; i++) {
                     for(var j = 0; j < p[i].children.length; j++){
                       if(p[i].children[j].data){
-                        paragraphs += (p.children[j].data);
+                        paragraphs += (p[i].children[j].data);
                     }
                   }
                 }
