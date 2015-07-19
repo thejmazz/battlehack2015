@@ -218,15 +218,16 @@ function articulate(page) {
 
                  for(var y = 0; y < elem.children[j].length; y++)
                     paragraphs.push(elem.children[j].data);
-                
+
 
               })
               console.log(paragraphs);
               return paragraphs;
           }
         }
-    )
-}
+
+      })
+    }
 
 
 
