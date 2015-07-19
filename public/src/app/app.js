@@ -7,7 +7,7 @@ angular.module('smser', ['ui.router', 'lumx'])
 
     $stateProvider
     .state('main', {
-        templateUrl: 'app/templates/main.html'
+        templateUrl: 'app/templates/core.html'
     })
     .state('main.home', {
         url: '/',

@@ -54,6 +54,10 @@ gulp.task('sass', function() {
     .pipe(browserSync.stream());
 });
 
+gulp.task('sass:watch', function() {
+    gulp.watch(sassDir, ['sass']);
+})
+
 gulp.task('jshint', function() {
     gulp.src(jsGlob)
     .pipe(jshint())

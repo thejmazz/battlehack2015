@@ -22,19 +22,19 @@ router.get('/', function(req, res) {
       break;
 
     case "site":
-    request("http://localhost:9001/api/screen/?url=" + input[1], function (error, response, body) {
+    //request("http://localhost:9001/api/screen/?url=" + input[1], function (error, response, body) {
 
       client.messages.create({
         to: req.query.From,
         from: "+12892160973",
-        mediaUrl: body
+        mediaUrl: 'http://localhost:9001/api/screen/?url=' + input[1]
       }, function(err, message) {
         if(err) return console.log(err);
         process.stdout.write(message.sid);
         close(res, resp);
       });
 
-    })
+    //})
 
       break;
 

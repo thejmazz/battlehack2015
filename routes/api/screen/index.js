@@ -4,7 +4,7 @@ var cp = require('child_process');
 var phantomjs = require('phantomjs');
 var binPath = phantomjs.path;
 
-var screenDir = '../../public/screens';
+var screenDir = 'screens';
 var format = 'png';
 
 
@@ -32,6 +32,8 @@ router.get('/', function(req, res) {
             zeroFill(date.getDate()) + '/' +
             fileName;
 
+    //fileMiniPath = path.join('../../../public/src/', fileMiniPath);
+
     var childArgs = [
         path.join(__dirname, '../../../phantom', 'github.js'),
         req.query.url,
@@ -46,8 +48,8 @@ router.get('/', function(req, res) {
         //res.send('Successfully rendered ' + fileName + '\n');
         var filePath = path.join(__dirname, '../../../', fileMiniPath + '.' + format)
 
-        res.send(filePath)
-        //res.sendFile(filePath);
+        //res.send(filePath)
+        res.sendFile(filePath);
     });
 });
 
