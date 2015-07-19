@@ -13,6 +13,11 @@ angular.module('smser', ['ui.router', 'lumx'])
         url: '/',
         templateUrl: 'app/pages/home/home.html',
         controller: 'HomeCtrl'
+    })
+    .state('main.paypalsuccess', {
+      url: '/paypalsuccess',
+      templateUrl: 'app/pages/success/success.html',
+      controller: 'SuccessCtrl'
     });
 })
 

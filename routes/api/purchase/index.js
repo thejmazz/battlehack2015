@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
       "payment_method": "paypal",
     },
     "redirect_urls": {
-        "return_url": "http:\/\/localhost:9001\/api\/purchase\/success",
+        "return_url": "http:\/\/localhost:9001\/#\/paypalsuccess",
         "cancel_url": "http:\/\/localhost:9001\/api\/purchase\/fail"
     },
     "transactions": [{

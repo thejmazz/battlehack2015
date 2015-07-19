@@ -47,22 +47,26 @@ angular.module('smser')
 
           $scope.$digest();
         })
-
-        // $http.get(completeUrl).success(function(err,data) {
-        //   console.log(data);
-        //
-        //   $scope.msgs.push({
-        //     type: 'to',
-        //     content: $scope.typespace
-        //   });
-        //   // $scope.msgs.push({
-        //   //   type: 'from',
-        //   //   content: '<img src="' + baseUrl + data + '">'
-        //   // })
-        //   $scope.typespace = '';
-        // }).error(function(err) {
-        //   console.log('err' + err);
-        // });
       }
     };
+
+    $scope.purchase = function() {
+      $.get(baseUrl + 'api/purchase').done(function(data) {
+        console.log(data);
+
+        data.links.forEach(function(link) {
+          if (link.method === 'REDIRECT') {
+            $scope.redirect_ready = true;
+            $scope.paypal_redirect = link.href;
+            $scope.$digest();
+          }
+        })
+      })
+
+      // $http.get(baseUrl + 'api/purchase').success(function(err, data) {
+      //   console.log(data);
+      // }).error(function(e) {
+      //   console.log(e);
+      // })
+    }
 }]);
