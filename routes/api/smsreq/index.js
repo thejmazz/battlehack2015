@@ -10,7 +10,10 @@ router.get('/', function(req, res) {
   // Passing in a string argument sets the content of the XML tag.
   // Passing in an object literal sets attributes on the XML tag.
 
- switch(req.query.Body.toLowerCase()){
+  var input = req.query.Body.toLowerCase();
+  console.log(input);
+
+  switch(input[0]){
     case "commands":
       resp.message("you requested help");
       close(res, resp);
@@ -18,9 +21,9 @@ router.get('/', function(req, res) {
 
     case "pic":
       client.messages.create({
-      to: req.query.From,
-      from: "+12892160973",
-      mediaUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Toronto_Maple_Leafs_logo.svg/178px-Toronto_Maple_Leafs_logo.svg.png"
+        to: req.query.From,
+        from: "+12892160973",
+        mediaUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/Toronto_Maple_Leafs_logo.svg/178px-Toronto_Maple_Leafs_logo.svg.png"
       }, function(err, message) {
         console.log(err);
         process.stdout.write(message.sid);
@@ -28,15 +31,19 @@ router.get('/', function(req, res) {
       });
       break;
 
-    default:
+    case "rss":
       resp.message("Please wait a moment");
-      parseRSS(req.query.Body, function(err, txt){
-      text = txt;
+      parseRSS(input[1], function(err, txt){
+        text = txt;
 
-      resp.message(txt);
-      //Render the TwiML document using "toString"
-      close(res, resp);
-    });
+        resp.message(txt);
+        //Render the TwiML document using "toString"
+        close(res, resp);
+      });
+
+    default:
+      //type
+      
   }
 });
 
@@ -45,7 +52,7 @@ function parseRSS(xml, callback) {
   // var type = feed.identify(xml);
   feed(xml, function(err, articles) {
       if (err)
-          callback(null, "no feed found!");
+        return callback(null, "no feed found!");
       var articleTitles = ""
       for(var i = 0; i < articles.length; i++){
         articleTitles +=  i + ": " + articles[i].title + "\n";
