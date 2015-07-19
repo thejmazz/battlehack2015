@@ -47,6 +47,7 @@ router.get('/', function(req, res) {
 
     case "rss":
       console.log("I am here");
+      console.log(input[1]);
       resp.message("Please wait a moment...");
       parseRSS(input[1], smsModel, function(err, txt){
         resp.message(txt);
