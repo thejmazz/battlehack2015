@@ -54,6 +54,7 @@ router.get('/', function(req, res) {
         //Render the TwiML document using "toString"
         close(res, resp);
       });
+      break;
 
     case "read":
       resp.message("Please wait a moment...");
@@ -78,7 +79,7 @@ router.get('/', function(req, res) {
 
         console.log(response);
       });
-
+      break;
     default:
       //type
 
