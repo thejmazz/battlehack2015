@@ -4,12 +4,14 @@ var twilio = require('twilio');
 var feed = require("feed-read");
 var request = require("request");
 var baseUrl = 'http://45.55.193.224/';
-var sms = App.Model("sms");
+var SMS = App.Model("sms");
 
 
 router.get('/', function(req, res) {
   var resp = new twilio.TwimlResponse();
   var text = '';
+  console.log(req.From);
+  //var smsModel = new SMS({SMS: resp.})
   // The TwiML response object will have functions on it that correspond
   // to TwiML "verbs" and "nouns". This example uses the "Say" verb.
   // Passing in a string argument sets the content of the XML tag.
@@ -17,7 +19,7 @@ router.get('/', function(req, res) {
 
   var input = req.query.Body.toLowerCase().split(" ");
   var findrss = require("find-rss");
-  console.log(input);
+
 
   switch(input[0]){
     case "commands":
