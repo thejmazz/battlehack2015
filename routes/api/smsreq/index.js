@@ -43,13 +43,15 @@ router.get('/', function(req, res) {
 
       var paragraphs = articulate(model.GeneralList[parseInt(input[0])]);
       model.GeneralList = paragraphs;
+      console.log("articulate: ")
       console.log(paragraphs);
+      console.log("\n_______\n")
       model.Counter = 0;
 
       model.save(function(err, data){
         if(err)
           return console.log(err);
-        resp.message(model.GeneralList[0]);
+        resp.message(data.GeneralList[0]);
         close(res, resp);
       });
 
@@ -225,6 +227,7 @@ function checkimg(page) {
     var images = [];
     $('img').each(function(i, elem) {
       images[i] = $(this).text();
+
     });
 
     paragraphs.join(', ');
